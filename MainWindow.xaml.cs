@@ -60,28 +60,48 @@ namespace vLauncher
 
             string[] daten = { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
 
-            File.WriteAllLines(path, daten);
-
-            string[] files = Directory.GetFiles(path2, "*.vdata");
-
-            foreach (string file in files)
-            {
-                if (IOPath.GetFileName(file) != "headlines.vdata")
-                {
-                    File.Delete(file);
-                }
-            }
 
             MessageBoxResult result = MessageBox.Show(
-                "Die App muss neu gestartet werden, damit die Änderungen wirksam werden. Möchten Sie die App jetzt neu starten?",
-                "Neustart erforderlich",
+                "Wollen Sie wirklich alle Daten zurücksetzen? Alle Buttons werden auf 'unbenutzt' gesetzt und alle Apps gelöscht. | Abfrage 1",
+                "vLauncher - Daten zurücksetzen | Abfrage 1",
                 MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+                MessageBoxImage.Warning);
 
             if (result == MessageBoxResult.Yes)
             {
-                Application.Current.Shutdown();
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                MessageBoxResult result2 = MessageBox.Show(
+                    "Wollen Sie wirklich alle Daten zurücksetzen? Alle Buttons werden auf 'unbenutzt' gesetzt und alle Apps gelöscht. | Abfrage 2",
+                    "vLauncher - Daten zurücksetzen | Abfrage 2",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result2 == MessageBoxResult.Yes)
+                {
+
+                    File.WriteAllLines(path, daten);
+
+                    string[] files = Directory.GetFiles(path2, "*.vdata");
+
+                    foreach (string file in files)
+                    {
+                        if (IOPath.GetFileName(file) != "headlines.vdata")
+                        {
+                            File.Delete(file);
+                        }
+                    }
+
+                    MessageBoxResult result3 = MessageBox.Show(
+                        "Die App muss neu gestartet werden, damit die Änderungen wirksam werden. Möchten Sie die App jetzt neu starten?",
+                        "Neustart erforderlich",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+
+                    if (result3 == MessageBoxResult.Yes)
+                    {
+                        Application.Current.Shutdown();
+                        System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                    }
+                }
             }
         }
 
