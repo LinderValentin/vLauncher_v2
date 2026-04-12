@@ -22,14 +22,6 @@ namespace vLauncher
 {
     public partial class MainWindow : Window
     {
-        // ✅ NEU: zentraler AppData Pfad
-        private static readonly string BasePath =
-            System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "vLauncher",
-                "Saves"
-            );
-
         public MainWindow()
         {
             InitializeComponent();
@@ -39,19 +31,18 @@ namespace vLauncher
 
         public void vLoadHeadlines()
         {
-            string path = System.IO.Path.Combine(BasePath, "headlines.vdata");
-
-            if (!File.Exists(path)) return;
+            string path = System.IO.Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Saves",
+                "headlines.vdata"
+            );
 
             List<string> strList = new List<string>(File.ReadAllLines(path));
 
-            if (strList.Count >= 4)
-            {
-                Headline1.Text = strList[0];
-                Headline2.Text = strList[1];
-                Headline3.Text = strList[2];
-                Headline4.Text = strList[3];
-            }
+            Headline1.Text = strList[0];
+            Headline2.Text = strList[1];
+            Headline3.Text = strList[2];
+            Headline4.Text = strList[3];
         }
 
         public void vChangeHeadlines(object sender, RoutedEventArgs e)
@@ -67,13 +58,19 @@ namespace vLauncher
 
         public void vResetFiles(object sender, RoutedEventArgs e)
         {
-            string path2 = BasePath;
+            string path = System.IO.Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Saves",
+                "headlines.vdata"
+            );
 
-            Directory.CreateDirectory(BasePath);
-
-            string path = System.IO.Path.Combine(BasePath, "headlines.vdata");
+            string path2 = System.IO.Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Saves"
+            );
 
             string[] daten = { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
+
             File.WriteAllLines(path, daten);
 
             string[] files = Directory.GetFiles(path2, "*.vdata");
@@ -94,17 +91,8 @@ namespace vLauncher
 
             if (result == MessageBoxResult.Yes)
             {
-                MessageBoxResult result2 = MessageBox.Show(
-                    "Die App muss neu gestartet werden, damit die Änderungen wirksam werden. Möchten Sie die App jetzt neu starten? (2. Überprüfung)",
-                    "Neustart erforderlich (2. Überprüfung)",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-
-                if (result2 == MessageBoxResult.Yes)
-                {
-                    Application.Current.Shutdown();
-                    System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                }
+                Application.Current.Shutdown();
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
             }
         }
 
@@ -142,7 +130,8 @@ namespace vLauncher
 
         public void vLoadButtons()
         {
-            string path = BasePath;
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+
             if (!Directory.Exists(path)) return;
 
             string[] files = Directory.GetFiles(path, "*.vdata");
@@ -186,14 +175,10 @@ namespace vLauncher
             Button btn = sender as Button;
             if (btn == null) return;
 
-            int iSender;
-            if (!int.TryParse(btn.Tag?.ToString(), out iSender))
-            {
-                MessageBox.Show("Ungültiger Button-Tag.");
-                return;
-            }
+            int iSender = int.Parse(btn.Tag.ToString());
 
-            string path = BasePath;
+            string path = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+
             if (!Directory.Exists(path))
             {
                 MessageBox.Show("Saves-Ordner nicht gefunden.");
@@ -204,12 +189,7 @@ namespace vLauncher
 
             if (!File.Exists(filePath))
             {
-                MessageBox.Show(
-                    $"Für diesen Button (ID: {iSender}) wurde keine Datei gefunden. Bitte ändern/bearbeiten Sie den Button.",
-                    "Keine Daten vorhanden",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
+                MessageBox.Show("Keine Datei gefunden.");
                 return;
             }
 
@@ -220,66 +200,18 @@ namespace vLauncher
 
             foreach (string file in strAppsList)
             {
-                string strType = strNoticeType(file);
-
                 try
                 {
-                    switch (strType)
+                    Process.Start(new ProcessStartInfo(file)
                     {
-                        case "url":
-                        case "file":
-                        case "directory":
-                        case "executable":
-                            Process.Start(new ProcessStartInfo(file)
-                            {
-                                UseShellExecute = true
-                            });
-                            break;
-
-                        case "special":
-                            Process.Start(new ProcessStartInfo(file)
-                            {
-                                UseShellExecute = true
-                            });
-                            break;
-
-                        default:
-                            MessageBox.Show($"Ungültiger oder unbekannter Eintrag:\n{file}",
-                                "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            break;
-                    }
+                        UseShellExecute = true
+                    });
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Fehler beim Starten von:\n{file}\n\n{ex.Message}",
-                        "Startfehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message);
                 }
             }
-        }
-
-        public string strNoticeType(string strData)
-        {
-            if (string.IsNullOrWhiteSpace(strData))
-                return "unbekannt";
-
-            strData = strData.Trim();
-
-            if (strData.StartsWith("http://") || strData.StartsWith("https://"))
-                return "url";
-
-            else if (strData.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-                return "executable";
-
-            else if (File.Exists(strData))
-                return "file";
-
-            else if (Directory.Exists(strData))
-                return "directory";
-
-            else if (strData.EndsWith(":", StringComparison.OrdinalIgnoreCase))
-                return "special";
-
-            return "unbekannt";
         }
     }
 }

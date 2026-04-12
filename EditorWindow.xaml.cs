@@ -26,19 +26,10 @@ namespace vLauncher
         private List<string> appFiles = new List<string>();
         private int iIndexButton;
 
-        // ✅ NEU: zentraler AppData Pfad
-        private static readonly string BasePath =
-            System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "vLauncher",
-                "Saves"
-            );
-
         public EditorWindow(int i)
         {
             InitializeComponent();
             iIndexButton = i;
-
             vLoadFileContent();
         }
 
@@ -59,9 +50,11 @@ namespace vLauncher
 
         public void vSpeichern(object sender, RoutedEventArgs e)
         {
-            Directory.CreateDirectory(BasePath);
-
-            string path = System.IO.Path.Combine(BasePath, iIndexButton + ".vdata");
+            string path = System.IO.Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Saves",
+                iIndexButton + ".vdata"
+            );
 
             string strButtonName = TxtButtonName.Text;
 
@@ -72,10 +65,7 @@ namespace vLauncher
 
                 List<string> strAllLines = new List<string>();
 
-                // 👉 Erste Zeile
                 strAllLines.Add(strButtonName);
-
-                // 👉 Restliche Zeilen
                 strAllLines.AddRange(zeilen);
 
                 File.WriteAllLines(path, strAllLines);
@@ -93,9 +83,7 @@ namespace vLauncher
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (File.Exists(path))
-                        File.Delete(path);
-
+                    File.Delete(path);
                     this.DialogResult = true;
                     this.Close();
                 }
@@ -104,7 +92,11 @@ namespace vLauncher
 
         public void vLoadFileContent()
         {
-            string path = System.IO.Path.Combine(BasePath, iIndexButton + ".vdata");
+            string path = System.IO.Path.Combine(
+                AppDomain.CurrentDomain.BaseDirectory,
+                "Saves",
+                iIndexButton + ".vdata"
+            );
 
             if (File.Exists(path))
             {
@@ -120,7 +112,6 @@ namespace vLauncher
 
         private void TxtApps_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
     }
 }

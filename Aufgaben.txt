@@ -1,2 +1,3 @@
 *Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen
 *Windows Leiste (minimieren, …) schwarz färben oder halt im System mode (dark/White)
+*Umschreiben, sodass bei erstem Start die App automatisch ein skript ausführt, welches die benötigten Ordner und Pfade im Dokumente Ordner erstellt, damit die App direkt loslegen kann
