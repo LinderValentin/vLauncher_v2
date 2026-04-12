@@ -31,11 +31,7 @@ namespace vLauncher
 
         public void vLoadHeadlines()
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                "headlines.vdata"
-            );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves", "headlines.vdata");
 
             List<string> strList = new List<string>(File.ReadAllLines(path));
 
@@ -58,16 +54,8 @@ namespace vLauncher
 
         public void vResetFiles(object sender, RoutedEventArgs e)
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                "headlines.vdata"
-            );
-
-            string path2 = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves"
-            );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves", "headlines.vdata");
+            string path2 = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves");
 
             string[] daten = { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
 
@@ -130,7 +118,7 @@ namespace vLauncher
 
         public void vLoadButtons()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves");
 
             if (!Directory.Exists(path)) return;
 
@@ -177,7 +165,7 @@ namespace vLauncher
 
             int iSender = int.Parse(btn.Tag.ToString());
 
-            string path = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves" );
 
             if (!Directory.Exists(path))
             {

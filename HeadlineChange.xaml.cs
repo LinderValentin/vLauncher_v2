@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using IOPath = System.IO.Path;
 using System.Windows.Input;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace vLauncher
 {
@@ -33,11 +35,7 @@ namespace vLauncher
 
         public void vLoadHeadlines()
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                "headlines.vdata"
-            );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves", "headlines.vdata");
 
             List<string> strList = new List<string>(File.ReadAllLines(path));
 
@@ -49,11 +47,7 @@ namespace vLauncher
 
         public void vChangeHeadlinesDatei(object sender, RoutedEventArgs e)
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                "headlines.vdata"
-            );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves", "headlines.vdata");
 
             string[] daten =
             {

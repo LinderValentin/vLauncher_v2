@@ -50,11 +50,7 @@ namespace vLauncher
 
         public void vSpeichern(object sender, RoutedEventArgs e)
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                iIndexButton + ".vdata"
-            );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves", iIndexButton + ".vdata");
 
             string strButtonName = TxtButtonName.Text;
 
@@ -92,11 +88,7 @@ namespace vLauncher
 
         public void vLoadFileContent()
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                iIndexButton + ".vdata"
-            );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves", iIndexButton + ".vdata");
 
             if (File.Exists(path))
             {
