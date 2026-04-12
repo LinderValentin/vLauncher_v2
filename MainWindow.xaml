@@ -196,6 +196,7 @@
 
         <!-- BOTTOM -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
+            <TextBlock Text="Rechtsklick auf Buttons zum Bearbeiten" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="#BFFFFFFF" FontSize="20"/>
             <Button Content="Zurücksetzen" Click="vResetFiles" Style="{StaticResource ModernBlueButton}"/>
             <Button Content="Überschriften ändern" Click="vChangeHeadlines" Style="{StaticResource ModernBlueButton}"/>
         </StackPanel>
