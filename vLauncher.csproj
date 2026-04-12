@@ -99,6 +99,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="FilePath\CreateFilePath.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -121,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Aufgaben.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FilePath\CreateFilePath.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

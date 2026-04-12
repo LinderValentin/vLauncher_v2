@@ -25,6 +25,7 @@ namespace vLauncher
         public MainWindow()
         {
             InitializeComponent();
+            vEnsureExistPath();
             vLoadHeadlines();
             vLoadButtons();
         }
@@ -199,6 +200,31 @@ namespace vLauncher
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        public void vEnsureExistPath()
+        {
+            string[] strData = { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
+
+            string path = IOPath.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "vLauncher",
+                "Saves"
+            );
+
+            // Ordner erstellen (falls nicht vorhanden)
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            // Datei prüfen + erstellen
+            string filePath = IOPath.Combine(path, "headlines.vdata");
+
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllLines(filePath, strData);
             }
         }
     }
