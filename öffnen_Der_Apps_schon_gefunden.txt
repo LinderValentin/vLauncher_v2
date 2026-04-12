@@ -1,0 +1,56 @@
+        public void OpenGaming(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("discord:") { UseShellExecute = true }); //Discord
+            Process.Start(new ProcessStartInfo("steam:") { UseShellExecute = true });//Steam
+            Process.Start(new ProcessStartInfo("modrinth:") { UseShellExecute = true });//Modrinth
+        }
+
+        public void OpenEntertainment(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("msedge.exe") { UseShellExecute = true });//Edge
+            Process.Start(new ProcessStartInfo("spotify:") { UseShellExecute = true });//Spotify
+        }
+
+        public void OpenCoding(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("devenv.exe") { UseShellExecute = true }); //VS
+            Process.Start(new ProcessStartInfo("Code.exe") { UseShellExecute = true }); //VS Code
+        }
+
+        public void OpenSWP(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("devenv.exe") { UseShellExecute = true }); //VS
+            Process.Start(new ProcessStartInfo(@"D:\02_Schule\SWP1") { UseShellExecute = true }); //SWP Ordner
+        }
+
+        public void OpenSchule(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("msteams:") { UseShellExecute = true });//Teams
+            Process.Start(new ProcessStartInfo(@"D:\02_Schule") { UseShellExecute = true }); //Schul Ordner
+        }
+
+        public void OpenWerkstatt(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("msteams:") { UseShellExecute = true });//Teams
+            Process.Start(new ProcessStartInfo(@"C:\Program Files\Oracle\VirtualBox\VirtualBox.exe") { UseShellExecute = true });
+        }
+
+        public void OpenCAD(object sender, RoutedEventArgs e)
+        {
+            if (HandleEditClick(sender as Button)) return;
+
+            Process.Start(new ProcessStartInfo("msteams:") { UseShellExecute = true });//Teams
+            Process.Start(new ProcessStartInfo(@"Inventor.exe") { UseShellExecute = true }); //Inventor
+            Process.Start(new ProcessStartInfo(@"D:\02_Schule\MT_cad") { UseShellExecute = true }); //MT_CAD Ordner
