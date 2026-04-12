@@ -20,22 +20,16 @@ using System.Data;
 
 namespace vLauncher
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-
-    /*
-            Process.Start(new ProcessStartInfo(@"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe") { UseShellExecute = true }); //VS
-            Process.Start(new ProcessStartInfo(@"C:\Users\linde\AppData\Local\Programs\Microsoft VS Code\Code.exe") { UseShellExecute = true }); //VS Code
-            Process.Start(new ProcessStartInfo("https://chatgpt.com/") { UseShellExecute = true }); //Chatgpt
-            Process.Start(new ProcessStartInfo(@"C:\Users\linde\Desktop\Coding") { UseShellExecute = true }); //Coding Ordner
-            Process.Start(new ProcessStartInfo("msteams:") { UseShellExecute = true });//Teams
-    */
-
-
     public partial class MainWindow : Window
     {
+        // ✅ NEU: zentraler AppData Pfad
+        private static readonly string BasePath =
+            System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "vLauncher",
+                "Saves"
+            );
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,14 +39,19 @@ namespace vLauncher
 
         public void vLoadHeadlines()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves", "headlines.vdata");
+            string path = System.IO.Path.Combine(BasePath, "headlines.vdata");
+
+            if (!File.Exists(path)) return;
 
             List<string> strList = new List<string>(File.ReadAllLines(path));
 
-            Headline1.Text = strList[0];
-            Headline2.Text = strList[1];
-            Headline3.Text = strList[2];
-            Headline4.Text = strList[3];
+            if (strList.Count >= 4)
+            {
+                Headline1.Text = strList[0];
+                Headline2.Text = strList[1];
+                Headline3.Text = strList[2];
+                Headline4.Text = strList[3];
+            }
         }
 
         public void vChangeHeadlines(object sender, RoutedEventArgs e)
@@ -68,11 +67,13 @@ namespace vLauncher
 
         public void vResetFiles(object sender, RoutedEventArgs e)
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves", "headlines.vdata");
-            string path2 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+            string path2 = BasePath;
+
+            Directory.CreateDirectory(BasePath);
+
+            string path = System.IO.Path.Combine(BasePath, "headlines.vdata");
+
             string[] daten = { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
-
-
             File.WriteAllLines(path, daten);
 
             string[] files = Directory.GetFiles(path2, "*.vdata");
@@ -104,11 +105,7 @@ namespace vLauncher
                     Application.Current.Shutdown();
                     System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
                 }
-
-
             }
-
-            
         }
 
         public void vReloadData()
@@ -131,21 +128,21 @@ namespace vLauncher
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
-                if (result == MessageBoxResult.Yes)
-                {
+            if (result == MessageBoxResult.Yes)
+            {
                 EditorWindow buttonChange = new EditorWindow(iSender);
                 buttonChange.ShowDialog();
+
                 if (buttonChange.DialogResult == true)
                 {
                     vReloadData();
                 }
             }
-
         }
 
         public void vLoadButtons()
         {
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+            string path = BasePath;
             if (!Directory.Exists(path)) return;
 
             string[] files = Directory.GetFiles(path, "*.vdata");
@@ -159,21 +156,20 @@ namespace vLauncher
 
                 string[] content = File.ReadAllLines(file);
 
-                // find button by the same id as the filename (Btn11 -> file "11.vdata")
                 Button btn = (Button)FindName("Btn" + name);
 
                 if (btn != null)
                 {
-                // first line is the name; if empty use "unbenutzt"
                     var raw = content.Length > 0 ? content[0] : string.Empty;
                     var display = string.IsNullOrWhiteSpace(raw) ? "unbenutzt" : raw.Trim();
                     btn.Content = display;
 
-                    // if the name is set (not the default 'unbenutzt' or 'leer'), give it the blue style
                     var blue = TryFindResource("ModernBlueButton") as Style;
                     var disabled = TryFindResource("DisabledButtonStyle") as Style;
+
                     if (!string.Equals(display, "unbenutzt", StringComparison.OrdinalIgnoreCase) &&
-                        !string.Equals(display, "leer", StringComparison.OrdinalIgnoreCase) && blue != null)
+                        !string.Equals(display, "leer", StringComparison.OrdinalIgnoreCase) &&
+                        blue != null)
                     {
                         btn.Style = blue;
                     }
@@ -197,7 +193,7 @@ namespace vLauncher
                 return;
             }
 
-            string path = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Saves");
+            string path = BasePath;
             if (!Directory.Exists(path))
             {
                 MessageBox.Show("Saves-Ordner nicht gefunden.");
@@ -217,15 +213,8 @@ namespace vLauncher
                 return;
             }
 
-            if (!File.Exists(filePath))
-            {
-                MessageBox.Show($"Datei '{filePath}' nicht gefunden.");
-                return;
-            }
-
             List<string> strAppsList = File.ReadAllLines(filePath).ToList();
 
-            // Optional: erste Zeile entfernen (z.B. Header)
             if (strAppsList.Count > 0)
                 strAppsList.RemoveAt(0);
 
@@ -252,7 +241,6 @@ namespace vLauncher
                             {
                                 UseShellExecute = true
                             });
-                            //MessageBox.Show($"Spezialpfad '{file}' wird noch nicht unterstützt.");
                             break;
 
                         default:
@@ -277,25 +265,19 @@ namespace vLauncher
             strData = strData.Trim();
 
             if (strData.StartsWith("http://") || strData.StartsWith("https://"))
-            {
                 return "url";
-            }
+
             else if (strData.EndsWith(".exe", StringComparison.OrdinalIgnoreCase))
-            {
                 return "executable";
-            }
+
             else if (File.Exists(strData))
-            {
                 return "file";
-            }
+
             else if (Directory.Exists(strData))
-            {
                 return "directory";
-            }
+
             else if (strData.EndsWith(":", StringComparison.OrdinalIgnoreCase))
-            {
                 return "special";
-            }
 
             return "unbekannt";
         }

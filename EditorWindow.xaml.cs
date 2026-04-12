@@ -26,10 +26,19 @@ namespace vLauncher
         private List<string> appFiles = new List<string>();
         private int iIndexButton;
 
+        // ✅ NEU: zentraler AppData Pfad
+        private static readonly string BasePath =
+            System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "vLauncher",
+                "Saves"
+            );
+
         public EditorWindow(int i)
         {
             InitializeComponent();
             iIndexButton = i;
+
             vLoadFileContent();
         }
 
@@ -50,11 +59,9 @@ namespace vLauncher
 
         public void vSpeichern(object sender, RoutedEventArgs e)
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                iIndexButton + ".vdata"
-            );
+            Directory.CreateDirectory(BasePath);
+
+            string path = System.IO.Path.Combine(BasePath, iIndexButton + ".vdata");
 
             string strButtonName = TxtButtonName.Text;
 
@@ -76,7 +83,7 @@ namespace vLauncher
                 this.DialogResult = true;
                 this.Close();
             }
-            else if(strButtonName == "")
+            else if (strButtonName == "")
             {
                 MessageBoxResult result = MessageBox.Show(
                     "Der Buttonname darf nicht leer sein, wenn Sie trotzdem fortfahren wird die Buttoneinstellung gelöscht \n Möchten Sie das Bearbeitungsfenster verlassen?",
@@ -84,9 +91,11 @@ namespace vLauncher
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
 
-                    if (result == MessageBoxResult.Yes)
-                    {
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (File.Exists(path))
                         File.Delete(path);
+
                     this.DialogResult = true;
                     this.Close();
                 }
@@ -95,14 +104,12 @@ namespace vLauncher
 
         public void vLoadFileContent()
         {
-            string path = System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Saves",
-                iIndexButton + ".vdata"
-            );
+            string path = System.IO.Path.Combine(BasePath, iIndexButton + ".vdata");
+
             if (File.Exists(path))
             {
                 string[] zeilen = File.ReadAllLines(path);
+
                 if (zeilen.Length > 0)
                 {
                     TxtButtonName.Text = zeilen[0];

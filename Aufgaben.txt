@@ -1,3 +1,2 @@
 *Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen
-*installer machen
-*github repository erstellen
+*Windows Leiste (minimieren, …) schwarz färben oder halt im System mode (dark/White)
