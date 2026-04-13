@@ -22,12 +22,27 @@ namespace vLauncher
 {
     public partial class MainWindow : Window
     {
+        private DateTime lastClickTime;
+
         public MainWindow()
         {
             InitializeComponent();
             vEnsureExistPath();
             vLoadHeadlines();
             vLoadButtons();
+        }
+
+        public void vDoubleClickHeadline(object sender, MouseButtonEventArgs e)
+        {
+            DateTime now = DateTime.Now;
+
+            // Double Click Erkennung
+            if ((now - lastClickTime).TotalMilliseconds <= 300)
+            {
+                vChangeHeadlines();
+            }
+
+            lastClickTime = now;
         }
 
         public void vLoadHeadlines()
@@ -42,7 +57,7 @@ namespace vLauncher
             Headline4.Text = strList[3];
         }
 
-        public void vChangeHeadlines(object sender, RoutedEventArgs e)
+        public void vChangeHeadlines()
         {
             HeadlineChange headlineChange = new HeadlineChange();
             headlineChange.ShowDialog();

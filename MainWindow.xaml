@@ -172,7 +172,7 @@
 
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
-                            <TextBlock x:Name="Headline1" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" Foreground="White"/>
+                            <TextBlock x:Name="Headline1" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" Foreground="White" MouseLeftButtonDown="vDoubleClickHeadline"/>
                             <WrapPanel>
                                 <Button x:Name="Btn11" Tag="11" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
                                         Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
@@ -247,13 +247,13 @@
 
             <!-- BOTTOM -->
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
-                <TextBlock Text="Rechtsklick auf Buttons zum Bearbeiten"
-                           VerticalAlignment="Center"
-                           Margin="0,0,12,0"
-                           Foreground="#BFFFFFFF"
-                           FontSize="20"/>
+                <TextBlock Text="Rechtsklick auf Buttons zum Bearbeiten, Doppelklicken auf irgendeine Überschrift um die Überschriften zu bearbeiten"
+                    VerticalAlignment="Center"
+                    Margin="0,0,12,0"
+                    Foreground="#BFFFFFFF"
+                    FontSize="20"
+                    TextWrapping="Wrap"/>
                 <Button Content="Zurücksetzen" Click="vResetFiles" Style="{StaticResource ModernBlueButton}"/>
-                <Button Content="Überschriften ändern" Click="vChangeHeadlines" Style="{StaticResource ModernBlueButton}"/>
             </StackPanel>
 
         </Grid>
