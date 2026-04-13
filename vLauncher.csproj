@@ -117,9 +117,6 @@
     <Resource Include="Images\vLauncher_Logo_klein.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="öffnen_Der_Apps_schon_gefunden.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Aufgaben.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
