@@ -3,4 +3,4 @@
 *Logo hochwertiger machen und nach rechts verschieben
 *Nach neustart nicht herumspringen sondern an der selben Stelle bleiben
 *So machen das user neue Überschriften machen kann ( über Headlines file wie viele es gibt, dann hinzufügen dieser reihen, aktualieseren der load Komponenten in mainwindow, rest arbeitet mit tags)
-*nur ein fenster möglich machen
+*MessageBoxen custom machen (mit eigenem Design)

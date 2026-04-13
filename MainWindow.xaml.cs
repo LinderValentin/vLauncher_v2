@@ -257,6 +257,9 @@ namespace vLauncher
             this.Close();
         }
 
+        //only one windows allowed
+
+
         private void MinimizeWindow(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
