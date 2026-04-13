@@ -335,6 +335,7 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
+
 # Azure Stream Analytics local run output
 ASALocalRun/
 
@@ -361,3 +362,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+#not necessary files from creator of repository
+Aufgaben.txt
+öffnen_Der_Apps_schon_gefunden.txt
