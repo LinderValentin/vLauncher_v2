@@ -107,10 +107,8 @@ namespace vLauncher
 
         public void vReloadData()
         {
-            MainWindow neu = new MainWindow();
-            neu.Show();
-
-            this.Close();
+            vLoadHeadlines();
+            vLoadButtons();
         }
 
         public void vChangeButtons(object sender, RoutedEventArgs e)
