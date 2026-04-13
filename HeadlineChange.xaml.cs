@@ -66,5 +66,17 @@ namespace vLauncher
         private void TxtHeadline1_TextChanged(object sender, TextChangedEventArgs e)
         {
         }
+
+        //for custom titlebar (not windows default)
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                this.DragMove();
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

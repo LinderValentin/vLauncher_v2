@@ -5,7 +5,9 @@
         Icon="/Images/vLauncher_Logo_klein.ico"
         Height="400" Width="650"
         WindowStartupLocation="CenterOwner"
-        Background="#0F1115">
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
     <Window.Resources>
 
@@ -15,15 +17,12 @@
         <SolidColorBrush x:Key="InputBg" Color="#151A22"/>
         <SolidColorBrush x:Key="BorderColor" Color="#2A2F3A"/>
 
-        <!-- =========================
-             BUTTON (MODERN)
-             ========================= -->
+        <!-- BUTTON -->
         <Style x:Key="ModernBlueButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="13"/>
-
             <Setter Property="MinWidth" Value="110"/>
             <Setter Property="MinHeight" Value="42"/>
             <Setter Property="Padding" Value="14,8"/>
@@ -40,7 +39,7 @@
                                 RenderTransformOrigin="0.5,0.5">
 
                             <Border.RenderTransform>
-                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                <ScaleTransform/>
                             </Border.RenderTransform>
 
                             <ContentPresenter HorizontalAlignment="Center"
@@ -48,7 +47,6 @@
                         </Border>
 
                         <ControlTemplate.Triggers>
-
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="b" Property="Background" Value="{StaticResource AccentColor}"/>
                             </Trigger>
@@ -60,7 +58,6 @@
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
 
                     </ControlTemplate>
@@ -68,11 +65,8 @@
             </Setter>
         </Style>
 
-        <!-- =========================
-             TEXTBOX (MODERN DARK INPUT)
-             ========================= -->
+        <!-- TEXTBOX -->
         <Style TargetType="TextBox">
-
             <Setter Property="Background" Value="{StaticResource InputBg}"/>
             <Setter Property="Foreground" Value="#E5E7EB"/>
             <Setter Property="CaretBrush" Value="#22D3EE"/>
@@ -96,18 +90,15 @@
 
                         <ControlTemplate.Triggers>
 
-                            <!-- Hover -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#3B82F6"/>
                             </Trigger>
 
-                            <!-- Focus -->
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#22D3EE"/>
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5"/>
                             </Trigger>
 
-                            <!-- Disabled -->
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border" Property="Opacity" Value="0.4"/>
                             </Trigger>
@@ -117,49 +108,82 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
 
     </Window.Resources>
 
-    <!-- CONTENT (UNVERÄNDERT) -->
-    <Grid Margin="14">
+    <!-- 🔥 WINDOW CONTAINER -->
+    <Border CornerRadius="16" Background="#0F1115">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="25" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Titlebar -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-            <TextBlock Text="Name des Buttons" Foreground="White"/>
-            <TextBox x:Name="TxtButtonName"/>
-        </StackPanel>
+            <!-- 🔥 TITLEBAR (NUR MINIMIZE) -->
+            <Grid Grid.Row="0" Background="#0B0F19" MouseDown="DragWindow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1" Margin="0,12,0,0">
-            <TextBlock Text="Apps / Pfade" Foreground="White"/>
-            <TextBox x:Name="TxtApps"
-                     AcceptsReturn="True"
-                     Height="220"
-                     TextChanged="TxtApps_TextChanged"/>
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
 
-        <StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right">
+                    <Button Content="—"
+                            Width="40" Height="40"
+                            Click="MinimizeWindow"
+                            Background="Transparent"
+                            Foreground="White"
+                            BorderThickness="0"/>
 
-            <Button Content="Speichern"
-                    Click="vSpeichern"
-                    Style="{StaticResource ModernBlueButton}"
-                    Width="110"/>
+                </StackPanel>
+            </Grid>
 
-            <Button Content="Abbrechen"
-                    Click="vAbbrechen"
-                    Style="{StaticResource ModernBlueButton}"
-                    Width="110"/>
+            <!-- CONTENT (UNVERÄNDERT) -->
+            <Grid Grid.Row="1" Margin="14">
 
-        </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-    </Grid>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Name des Buttons" Foreground="White"/>
+                    <TextBox x:Name="TxtButtonName"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="0,12,0,0">
+                    <TextBlock Text="Apps / Pfade" Foreground="White"/>
+                    <TextBox x:Name="TxtApps"
+                             AcceptsReturn="True"
+                             Height="220"
+                             TextChanged="TxtApps_TextChanged"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <Button Content="Speichern"
+                            Click="vSpeichern"
+                            Style="{StaticResource ModernBlueButton}"
+                            Width="110"/>
+
+                    <Button Content="Abbrechen"
+                            Click="vAbbrechen"
+                            Style="{StaticResource ModernBlueButton}"
+                            Width="110"/>
+
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
 
 </Window>

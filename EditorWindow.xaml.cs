@@ -105,5 +105,16 @@ namespace vLauncher
         private void TxtApps_TextChanged(object sender, TextChangedEventArgs e)
         {
         }
+
+        //for custom top bar (not default windows top bar)
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

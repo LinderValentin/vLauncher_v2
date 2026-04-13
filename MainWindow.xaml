@@ -4,7 +4,9 @@
         Title="vLauncher - Home"
         Icon="/Images/vLauncher_Logo_klein.ico"
         Height="600" Width="1000"
-        Background="#0F1115">
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
 
     <Window.Resources>
 
@@ -20,7 +22,6 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
 
-            <!-- 🔥 GRÖßER -->
             <Setter Property="MinWidth" Value="140"/>
             <Setter Property="MinHeight" Value="52"/>
             <Setter Property="Padding" Value="18,10"/>
@@ -33,16 +34,16 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="b"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="12"
-                        RenderTransformOrigin="0.5,0.5">
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12"
+                                RenderTransformOrigin="0.5,0.5">
 
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1"/>
                             </Border.RenderTransform>
 
                             <ContentPresenter HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"/>
+                                              VerticalAlignment="Center"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
@@ -67,8 +68,8 @@
 
         <!-- ===== DISABLED ===== -->
         <Style x:Key="DisabledButtonStyle"
-       BasedOn="{StaticResource ModernBlueButton}"
-       TargetType="Button">
+               BasedOn="{StaticResource ModernBlueButton}"
+               TargetType="Button">
 
             <Setter Property="Background" Value="#2A2F3A"/>
             <Setter Property="Foreground" Value="#6B7280"/>
@@ -87,119 +88,174 @@
 
     </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <!-- 🔥 WINDOW CONTAINER -->
+    <Border CornerRadius="16" Background="#0F1115">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="25" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
 
-        <!-- TOP -->
-        <Border Grid.Row="0" Background="#111827" Height="120">
-            <DockPanel Margin="18">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Titlebar -->
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
-                    <TextBlock Text="vLauncher" FontSize="24" FontWeight="Bold" Foreground="White"/>
-                    <TextBlock Text="Starte Apps und Dateien mit einem Klick" Foreground="#BFFFFFFF"/>
+            <!-- 🔥 CUSTOM TITLEBAR -->
+            <Grid Grid.Row="0" Background="#0B0F19" MouseDown="DragWindow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock x:Name="UserNameText" Text="Linder Valentin"
-                               FontWeight="SemiBold" Foreground="White" Margin="0,10,0,0"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Button Content="—"
+                            Width="40" Height="40"
+                            Click="MinimizeWindow"
+                            Background="Transparent"
+                            Foreground="White"
+                            BorderThickness="0"/>
 
-                    <TextBlock x:Name="UserEmailText" Text="linder.vale.2009@gmail.com"
-                               Foreground="#BFFFFFFF"/>
+                    <Button Content="✕"
+                            Width="40" Height="40"
+                            Click="CloseWindow"
+                            Foreground="White"
+                            BorderThickness="0">
+
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#EF4444"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                    </Button>
+
                 </StackPanel>
+                <TextBlock Text="vLauncher"
+                               VerticalAlignment="Center"
+                               Margin="10,0,852,0"
+                               FontWeight="Bold"
+                               Foreground="White"/>
+            </Grid>
 
-                <Image Source="/Images/vLauncher_Logo_klein.ico"
-                       Width="64" Height="64"
-                       DockPanel.Dock="Right" RenderTransformOrigin="5.633,0.485"/>
-            </DockPanel>
-        </Border>
+            <!-- TOP -->
+            <Border Grid.Row="1" Background="#111827" Height="120">
+                <DockPanel Margin="18">
 
-        <!-- CONTENT -->
-        <ScrollViewer Grid.Row="1">
-            <StackPanel Margin="24">
+                    <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
+                        <TextBlock Text="vLauncher" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock Text="Starte Apps und Dateien mit einem Klick" Foreground="#BFFFFFFF"/>
 
-                <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock x:Name="Headline1" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" Foreground="White"/>
-                        <WrapPanel>
-                            <Button x:Name="Btn11" Tag="11" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn12" Tag="12" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn13" Tag="13" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn14" Tag="14" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn15" Tag="15" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                        </WrapPanel>
+                        <TextBlock x:Name="UserNameText" Text="Linder Valentin"
+                                   FontWeight="SemiBold" Foreground="White" Margin="0,10,0,0"/>
+
+                        <TextBlock x:Name="UserEmailText" Text="linder.vale.2009@gmail.com"
+                                   Foreground="#BFFFFFFF"/>
                     </StackPanel>
-                </Border>
 
-                <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock x:Name="Headline2" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
-                        <WrapPanel>
-                            <Button x:Name="Btn21" Tag="21" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn22" Tag="22" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn23" Tag="23" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn24" Tag="24" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn25" Tag="25" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                        </WrapPanel>
-                    </StackPanel>
-                </Border>
+                    <Image Source="/Images/vLauncher_Logo_klein.ico"
+                           Width="64" Height="64"
+                           DockPanel.Dock="Right"/>
+                </DockPanel>
+            </Border>
 
-                <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock x:Name="Headline3" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
-                        <WrapPanel>
-                            <Button x:Name="Btn31" Tag="31" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn32" Tag="32" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn33" Tag="33" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn34" Tag="34" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn35" Tag="35" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                        </WrapPanel>
-                    </StackPanel>
-                </Border>
+            <!-- CONTENT -->
+            <ScrollViewer Grid.Row="2">
+                <StackPanel Margin="24">
 
-                <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock x:Name="Headline4" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
-                        <WrapPanel>
-                            <Button x:Name="Btn41" Tag="41" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn42" Tag="42" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn43" Tag="43" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn44" Tag="44" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                            <Button x:Name="Btn45" Tag="45" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
-                    Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
-                        </WrapPanel>
-                    </StackPanel>
-                </Border>
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="Headline1" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" Foreground="White"/>
+                            <WrapPanel>
+                                <Button x:Name="Btn11" Tag="11" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn12" Tag="12" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn13" Tag="13" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn14" Tag="14" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn15" Tag="15" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
 
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="Headline2" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
+                            <WrapPanel>
+                                <Button x:Name="Btn21" Tag="21" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn22" Tag="22" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn23" Tag="23" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn24" Tag="24" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn25" Tag="25" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="Headline3" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
+                            <WrapPanel>
+                                <Button x:Name="Btn31" Tag="31" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn32" Tag="32" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn33" Tag="33" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn34" Tag="34" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn35" Tag="35" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock x:Name="Headline4" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
+                            <WrapPanel>
+                                <Button x:Name="Btn41" Tag="41" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn42" Tag="42" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn43" Tag="43" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn44" Tag="44" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                                <Button x:Name="Btn45" Tag="45" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
+                                        Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- BOTTOM -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
+                <TextBlock Text="Rechtsklick auf Buttons zum Bearbeiten"
+                           VerticalAlignment="Center"
+                           Margin="0,0,12,0"
+                           Foreground="#BFFFFFFF"
+                           FontSize="20"/>
+                <Button Content="Zurücksetzen" Click="vResetFiles" Style="{StaticResource ModernBlueButton}"/>
+                <Button Content="Überschriften ändern" Click="vChangeHeadlines" Style="{StaticResource ModernBlueButton}"/>
             </StackPanel>
-        </ScrollViewer>
 
-        <!-- BOTTOM -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
-            <TextBlock Text="Rechtsklick auf Buttons zum Bearbeiten" VerticalAlignment="Center" Margin="0,0,12,0" Foreground="#BFFFFFFF" FontSize="20"/>
-            <Button Content="Zurücksetzen" Click="vResetFiles" Style="{StaticResource ModernBlueButton}"/>
-            <Button Content="Überschriften ändern" Click="vChangeHeadlines" Style="{StaticResource ModernBlueButton}"/>
-        </StackPanel>
-
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

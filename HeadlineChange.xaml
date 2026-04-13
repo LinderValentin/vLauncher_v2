@@ -6,7 +6,9 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        Background="#0F1115">
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
     <Window.Resources>
 
@@ -16,15 +18,12 @@
         <SolidColorBrush x:Key="InputBg" Color="#151A22"/>
         <SolidColorBrush x:Key="BorderColor" Color="#2A2F3A"/>
 
-        <!-- =========================
-             BUTTON (MODERN)
-             ========================= -->
+        <!-- BUTTON -->
         <Style x:Key="ModernBlueButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="13"/>
-
             <Setter Property="MinWidth" Value="110"/>
             <Setter Property="MinHeight" Value="42"/>
             <Setter Property="Padding" Value="14,8"/>
@@ -69,9 +68,7 @@
             </Setter>
         </Style>
 
-        <!-- =========================
-             TEXTBOX (MODERN DARK INPUT)
-             ========================= -->
+        <!-- TEXTBOX -->
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="{StaticResource InputBg}"/>
             <Setter Property="Foreground" Value="#E5E7EB"/>
@@ -95,18 +92,15 @@
 
                         <ControlTemplate.Triggers>
 
-                            <!-- Hover -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#3B82F6"/>
                             </Trigger>
 
-                            <!-- Focus -->
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="#22D3EE"/>
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5"/>
                             </Trigger>
 
-                            <!-- Disabled -->
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border" Property="Opacity" Value="0.4"/>
                             </Trigger>
@@ -120,44 +114,108 @@
 
     </Window.Resources>
 
-    <!-- CONTENT (UNVERÄNDERT) -->
-    <Border Background="#1C2230" Padding="16" Margin="12">
+    <!-- OUTER BORDER (Rounded + Shadow) -->
+    <Border Background="#0F1115"
+            CornerRadius="14"
+            Padding="0">
 
-        <StackPanel Width="380">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
 
-            <TextBlock Text="Überschriften bearbeiten"
-                       FontSize="18"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       Margin="0,0,0,12"/>
+        <Grid>
 
-            <TextBlock Text="Headline 1" Foreground="White"/>
-            <TextBox x:Name="TxtHeadline1"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock Text="Headline 2" Foreground="White" Margin="0,10,0,0"/>
-            <TextBox x:Name="TxtHeadline2"/>
+            <!-- TITLE BAR -->
+            <Border Background="#111827"
+                    CornerRadius="14,14,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseDown">
 
-            <TextBlock Text="Headline 3" Foreground="White" Margin="0,10,0,0"/>
-            <TextBox x:Name="TxtHeadline3"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Headline 4" Foreground="White" Margin="0,10,0,0"/>
-            <TextBox x:Name="TxtHeadline4"/>
+                    <TextBlock Text="Überschrifteneinstellungen"
+                               VerticalAlignment="Center"
+                               Margin="10,0"
+                               Foreground="White"
+                               FontWeight="Bold"/>
 
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        Margin="0,14,0,0">
+                    <!-- NUR MINIMIEREN -->
+                    <StackPanel Orientation="Horizontal" Grid.Column="1">
 
-                <Button Content="Abbrechen"
-                        Click="vBtnAbbrechen"
-                        Style="{StaticResource ModernBlueButton}"/>
+                        <Button Content="—"
+                                Width="40"
+                                Height="40"
+                                Background="Transparent"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="Minimize_Click">
 
-                <Button Content="Speichern"
-                        Click="vChangeHeadlinesDatei"
-                        Style="{StaticResource ModernBlueButton}"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#2A2F3A"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
 
-            </StackPanel>
+                        </Button>
 
-        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- CONTENT -->
+            <Border Grid.Row="1" Background="#1C2230" Padding="16" Margin="12">
+
+                <StackPanel Width="380">
+
+                    <TextBlock Text="Überschriften bearbeiten"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Headline 1" Foreground="White"/>
+                    <TextBox x:Name="TxtHeadline1"/>
+
+                    <TextBlock Text="Headline 2" Foreground="White" Margin="0,10,0,0"/>
+                    <TextBox x:Name="TxtHeadline2"/>
+
+                    <TextBlock Text="Headline 3" Foreground="White" Margin="0,10,0,0"/>
+                    <TextBox x:Name="TxtHeadline3"/>
+
+                    <TextBlock Text="Headline 4" Foreground="White" Margin="0,10,0,0"/>
+                    <TextBox x:Name="TxtHeadline4"/>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0,14,0,0">
+
+                        <Button Content="Abbrechen"
+                                Click="vBtnAbbrechen"
+                                Style="{StaticResource ModernBlueButton}"/>
+
+                        <Button Content="Speichern"
+                                Click="vChangeHeadlinesDatei"
+                                Style="{StaticResource ModernBlueButton}"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
     </Border>
 
 </Window>

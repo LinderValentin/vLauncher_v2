@@ -247,5 +247,21 @@ namespace vLauncher
                 File.WriteAllLines(filePath, strData);
             }
         }
+
+        //for custom window top bar (not default - windows one)
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

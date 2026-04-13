@@ -1,5 +1,4 @@
-*Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen
-*Windows Leiste (minimieren, …) schwarz färben oder halt im System mode (dark/White) --vorbereitet in ChatGPT
-*BackUp möglich (vllt mit Explorer öffnet sich und man kann so ordner aussuchen)
+*Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen*BackUp möglich (vllt mit Explorer öffnet sich und man kann so ordner aussuchen)
 *Menü unten bei Button Click öffnet sich
 *Logo hochwertiger machen und nach rechts verschieben
+*Nach neustart nicht herumspringen sondern an der selben Stelle bleiben
