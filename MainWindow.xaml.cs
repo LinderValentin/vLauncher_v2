@@ -32,6 +32,55 @@ namespace vLauncher
             vLoadButtons();
         }
 
+        //Menue Open by clicking on the image in the botton right corner
+        private void MenuToggle_Click(object sender, MouseButtonEventArgs e)
+        {
+            MenuPopup.IsOpen = !MenuPopup.IsOpen;
+            e.Handled = true;
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MenuPopup.IsOpen)
+                MenuPopup.IsOpen = false;
+        }
+
+        public void vOpenInfos(object sender, RoutedEventArgs e)
+        {
+            CloseMenu(sender, e);
+
+            Info info = new Info();
+            info.ShowDialog();
+        }
+
+        public void vMenueHeadlines(object sender, RoutedEventArgs e)
+        {
+            CloseMenu(sender, e);
+            vChangeHeadlines(sender, e);
+        }
+
+        public void vMenueReset (object sender, RoutedEventArgs e)
+        {
+            CloseMenu(sender, e);
+            vResetFiles(sender, e);
+        }
+
+        public void vCloseSoftware(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+
+
+
+        private void CloseMenu(object sender, RoutedEventArgs e)
+        {
+            MenuPopup.IsOpen = false;
+        }
+
+        //----------------------------------------------------------------------------------------------------
+
+        //Double Click to Change Headlines
         public void vDoubleClickHeadline(object sender, MouseButtonEventArgs e)
         {
             DateTime now = DateTime.Now;
@@ -39,7 +88,7 @@ namespace vLauncher
             // Double Click Erkennung
             if ((now - lastClickTime).TotalMilliseconds <= 300)
             {
-                vChangeHeadlines();
+                vChangeHeadlines(sender, e);
             }
 
             lastClickTime = now;
@@ -57,7 +106,7 @@ namespace vLauncher
             Headline4.Text = strList[3];
         }
 
-        public void vChangeHeadlines()
+        public void vChangeHeadlines(object sender, RoutedEventArgs e)
         {
             HeadlineChange headlineChange = new HeadlineChange();
             headlineChange.ShowDialog();

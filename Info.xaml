@@ -1,0 +1,162 @@
+﻿<Window x:Class="vLauncher.Info"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="vLauncher - Info"
+        Icon="/Images/vLauncher_Logo_klein.ico"
+        Height="420" Width="650"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+
+        <!-- COLORS -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#22D3EE"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1C2230"/>
+
+        <!-- BUTTON -->
+        <Style x:Key="ModernBlueButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="MinWidth" Value="110"/>
+            <Setter Property="MinHeight" Value="42"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="b"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                RenderTransformOrigin="0.5,0.5">
+
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Border.RenderTransform>
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="b" Property="Background" Value="{StaticResource AccentColor}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="b" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- READONLY TEXTBOX -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+
+    </Window.Resources>
+
+    <!-- WINDOW CONTAINER -->
+    <Border CornerRadius="16" Background="#0F1115">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="25" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 🔥 TOP BAR -->
+            <Grid Grid.Row="0" Background="#0B0F19" MouseDown="DragWindow">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="vLauncher - Info"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           FontWeight="Bold"
+                           Foreground="White"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+
+                    <!-- MINIMIZE -->
+                    <Button Content="—"
+                            Width="40" Height="40"
+                            Click="MinimizeWindow"
+                            Background="Transparent"
+                            Foreground="White"
+                            BorderThickness="0"/>
+                </StackPanel>
+
+            </Grid>
+
+            <!-- CONTENT -->
+            <Border Grid.Row="1" Background="#1C2230" Margin="16" Padding="16" CornerRadius="12">
+
+                <StackPanel>
+
+                    <TextBlock Text="Wie funktioniert vLauncher?"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,12"/>
+
+                    <TextBox AcceptsReturn="True"
+                             Text="vLauncher ist ein einfaches Tool zum Starten von Programmen, Dateien und Webseiten sowie Ordnerpfaden.
+Du kannst Buttons individuell konfigurieren, indem du mit der rechten Maustaste darauf klickst.
+
+Jeder Button kann mehrere Programme oder Pfade enthalten, die beim Klicken automatisch gestartet werden.
+
+Zusätzlich kannst du Überschriften bearbeiten, um deine Kategorien individuell anzupassen.
+
+Alle Daten werden lokal gespeichert, sodass deine Einstellungen erhalten bleiben."/>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- BOTTOM -->
+            <Border Grid.Row="2" Background="#111827" Padding="10">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <Button Content="Abbrechen"
+                            Click="CloseWindow"
+                            Style="{StaticResource ModernBlueButton}"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

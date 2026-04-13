@@ -6,7 +6,8 @@
         Height="600" Width="1000"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
 
     <Window.Resources>
 
@@ -247,13 +248,61 @@
 
             <!-- BOTTOM -->
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="24">
-                <TextBlock Text="Rechtsklick auf Buttons zum Bearbeiten, Doppelklicken auf irgendeine Überschrift um die Überschriften zu bearbeiten"
-                    VerticalAlignment="Center"
-                    Margin="0,0,12,0"
-                    Foreground="#BFFFFFFF"
-                    FontSize="20"
-                    TextWrapping="Wrap"/>
-                <Button Content="Zurücksetzen" Click="vResetFiles" Style="{StaticResource ModernBlueButton}"/>
+                <Image x:Name="InfoImage"
+                       Source="/Images/info_button.png"
+                       Width="64" Height="64"
+                       Cursor="Hand"
+                       MouseLeftButtonUp="vOpenInfos"/>
+                <Image x:Name="MenuIcon"
+                    Source="/Images/menue_button.png"
+                    Width="64" Height="64"
+                    Cursor="Hand"
+                    MouseLeftButtonUp="MenuToggle_Click"/>
+                <Popup x:Name="MenuPopup"
+                    Placement="Relative"
+                    StaysOpen="True"
+                    AllowsTransparency="True"
+                    HorizontalOffset="-115"
+                    VerticalOffset="-250">
+                    
+
+                    <Popup.PlacementTarget>
+                        <Binding ElementName="MenuIcon"/>
+                    </Popup.PlacementTarget>
+
+                    <Border Background="#1C2230"
+                        CornerRadius="12"
+                        Padding="12"
+                        Width="180"
+                        HorizontalAlignment="Right">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Menü"
+                                Foreground="White"
+                                FontWeight="Bold"
+                                Margin="0,0,0,10"/>
+
+                            <Button Content="Infos"
+                                Style="{StaticResource ModernBlueButton}"
+                                Click="vOpenInfos"/>
+
+                            <Button Content="Überschriften"
+                                Style="{StaticResource ModernBlueButton}"
+                                Click="vMenueHeadlines"/>
+
+                            <Button Content="Zurücksetzen"
+                                Style="{StaticResource ModernBlueButton}"
+                                Click="vMenueReset"/>
+                            
+                            <Button Content="Beenden"
+                                Style="{StaticResource ModernBlueButton}"
+                                Click="vCloseSoftware"/>
+
+                        </StackPanel>
+
+                    </Border>
+                </Popup>
             </StackPanel>
 
         </Grid>
