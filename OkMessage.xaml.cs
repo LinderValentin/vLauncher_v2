@@ -44,17 +44,8 @@ namespace vLauncher
                 case "FileNotFound":
                     TxtMessage.Text = "Keine Datei gefunden.";
                     break;
-                case "Restart":
-                    TxtMessage.Text = "Die App muss neu gestartet werden, damit die Änderungen wirksam werden. Möchten Sie die App jetzt neu starten?";
-                    break;
-                case "ButtonClose":
-                    TxtMessage.Text = "Wollen Sie wirklich dieses Fenster schließen? Alle nicht gespeicherten Änderungen gehen verloren!";
-                    break;
                 case "ButtonNameEmpty":
                     TxtMessage.Text = "Der Buttonname darf nicht leer sein, wenn Sie trotzdem fortfahren wird die Buttoneinstellung gelöscht \n Möchten Sie das Bearbeitungsfenster verlassen?";
-                    break;
-                case "ButtonChange":
-                    TxtMessage.Text = "Möchten Sie den Button wirklich ändern?";
                     break;
 
 
