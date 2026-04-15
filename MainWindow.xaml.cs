@@ -33,10 +33,9 @@ namespace vLauncher
         }
 
         //Menue Open by clicking on the image in the botton right corner
-        private void MenuToggle_Click(object sender, MouseButtonEventArgs e)
+        private void MenuToggle_Click(object sender, EventArgs e)
         {
             MenuPopup.IsOpen = !MenuPopup.IsOpen;
-            e.Handled = true;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

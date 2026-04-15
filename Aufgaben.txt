@@ -1,9 +1,7 @@
 *Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen*BackUp möglich (vllt mit Explorer öffnet sich und man kann so ordner aussuchen)
 *So machen das user neue Überschriften machen kann ( über Headlines file wie viele es gibt, dann hinzufügen dieser reihen, aktualieseren der load Komponenten in mainwindow, rest arbeitet mit tags)
 *Logo hochwertiger machen und nach rechts verschieben
-*MessageBoxen custom machen (mit eigenem Design)
 *App öffnet sich an der stelle wo es geschlossen wurde (speichern ?) neue fenster sollen in mitte von main windows sich IMMER öffnen | andere Fenster sollen IMMER in der mitte von main window öffnen
 *BugReport windows machen (mit Textfeld, Screenshot Möglichkeit?, Auswahl der Kategorie, etc.) und upload auf ?google server
 *custom Begrüßung mit Name (Eingabe nach ersten Start)
-*images in rechten ecke wieder kleiner
 *wenn Buttonname leer und dann speichern, dann kein Restart gemacht
