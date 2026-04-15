@@ -4,4 +4,3 @@
 *App öffnet sich an der stelle wo es geschlossen wurde (speichern ?) neue fenster sollen in mitte von main windows sich IMMER öffnen | andere Fenster sollen IMMER in der mitte von main window öffnen
 *BugReport windows machen (mit Textfeld, Screenshot Möglichkeit?, Auswahl der Kategorie, etc.) und upload auf ?google server
 *custom Begrüßung mit Name (Eingabe nach ersten Start)
-*wenn Buttonname leer und dann speichern, dann kein Restart gemacht

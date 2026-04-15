@@ -206,7 +206,7 @@
 
             <!-- CONTENT -->
             <ScrollViewer Grid.Row="2">
-                <StackPanel Margin="24">
+                <StackPanel Margin="24" x:Name="CardStackPanel">
 
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
@@ -228,7 +228,7 @@
 
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
-                            <TextBlock x:Name="Headline2" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
+                            <TextBlock x:Name="Headline2" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White" MouseLeftButtonDown="vDoubleClickHeadline"/>
                             <WrapPanel>
                                 <Button x:Name="Btn21" Tag="21" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
                                         Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
@@ -246,7 +246,7 @@
 
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
-                            <TextBlock x:Name="Headline3" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
+                            <TextBlock x:Name="Headline3" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White" MouseLeftButtonDown="vDoubleClickHeadline"/>
                             <WrapPanel>
                                 <Button x:Name="Btn31" Tag="31" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
                                         Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>
@@ -264,7 +264,7 @@
 
                     <Border Style="{StaticResource CardStyle}">
                         <StackPanel>
-                            <TextBlock x:Name="Headline4" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White"/>
+                            <TextBlock x:Name="Headline4" FontSize="18" FontWeight="Bold" Margin="0,0,0,12"  Foreground="White" MouseLeftButtonDown="vDoubleClickHeadline"/>
                             <WrapPanel>
                                 <Button x:Name="Btn41" Tag="41" Click="vLoadApps" MouseRightButtonUp="vChangeButtons"
                                         Content="unbenutzt" Style="{StaticResource DisabledButtonStyle}"/>

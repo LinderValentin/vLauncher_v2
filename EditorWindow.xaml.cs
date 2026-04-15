@@ -51,7 +51,7 @@ namespace vLauncher
 
             string strButtonName = TxtButtonName.Text;
 
-            if (strButtonName != "")
+            if (!string.IsNullOrWhiteSpace(strButtonName))
             {
                 string[] zeilen = TxtApps.Text
                     .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -69,6 +69,7 @@ namespace vLauncher
             else if (strButtonName == "")
             {
                 YesNoMessage yesnoMessage = new YesNoMessage("ButtonNameEmpty");
+                yesnoMessage.ShowDialog();
 
                 if (yesnoMessage.DialogResult == true)
                 {
@@ -77,6 +78,8 @@ namespace vLauncher
                     this.Close();
                 }
             }
+
+            return;
         }
 
         public void vLoadFileContent()

@@ -161,8 +161,36 @@ namespace vLauncher
 
         public void vReloadData()
         {
+
+            vClearUI();
+
             vLoadHeadlines();
             vLoadButtons();
+
+            Dispatcher.Invoke(() => { }, System.Windows.Threading.DispatcherPriority.Render);
+        }
+
+        public void vClearUI()
+        {
+            // Headlines reset
+            Headline1.Text = "";
+            Headline2.Text = "";
+            Headline3.Text = "";
+            Headline4.Text = "";
+
+            // Buttons reset
+            for (int i = 1; i <= 4; i++)
+            {
+                for (int j = 1; j <= 5; j++)
+                {
+                    Button btn = FindName($"Btn{i}{j}") as Button;
+
+                    if (btn == null) continue;
+
+                    btn.Content = "unbenutzt";
+                    btn.Style = (Style)FindResource("DisabledButtonStyle");
+                }
+            }
         }
 
         public void vChangeButtons(object sender, RoutedEventArgs e)
