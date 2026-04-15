@@ -125,21 +125,15 @@ namespace vLauncher
             string[] daten = { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
 
 
-            MessageBoxResult result = MessageBox.Show(
-                "Wollen Sie wirklich alle Daten zurücksetzen? Alle Buttons werden auf 'unbenutzt' gesetzt und alle Apps gelöscht. | Abfrage 1",
-                "vLauncher - Daten zurücksetzen | Abfrage 1",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
+            YesNoMessage yesNoMessage = new YesNoMessage("Reset1");
+            yesNoMessage.ShowDialog();
 
-            if (result == MessageBoxResult.Yes)
+            if (yesNoMessage.DialogResult == true)
             {
-                MessageBoxResult result2 = MessageBox.Show(
-                    "Wollen Sie wirklich alle Daten zurücksetzen? Alle Buttons werden auf 'unbenutzt' gesetzt und alle Apps gelöscht. | Abfrage 2",
-                    "vLauncher - Daten zurücksetzen | Abfrage 2",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Warning);
+                YesNoMessage yesNoMessage2 = new YesNoMessage("Reset2");
+                yesNoMessage2.ShowDialog();
 
-                if (result2 == MessageBoxResult.Yes)
+                if (yesNoMessage2.DialogResult == true)
                 {
 
                     File.WriteAllLines(path, daten);
@@ -154,13 +148,10 @@ namespace vLauncher
                         }
                     }
 
-                    MessageBoxResult result3 = MessageBox.Show(
-                        "Die App muss neu gestartet werden, damit die Änderungen wirksam werden. Möchten Sie die App jetzt neu starten?",
-                        "Neustart erforderlich",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Question);
+                    YesNoMessage yesNoMessage3 = new YesNoMessage("Restart");
+                    yesNoMessage3.ShowDialog();
 
-                    if (result3 == MessageBoxResult.Yes)
+                    if (yesNoMessage3.DialogResult == true)
                     {
                         Application.Current.Shutdown();
                         System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
@@ -181,13 +172,10 @@ namespace vLauncher
 
             int iSender = int.Parse(btn.Tag.ToString());
 
-            MessageBoxResult result = MessageBox.Show(
-                "Wollen Sie den Button ändern?",
-                "Button ändern",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+            YesNoMessage yesNoMessage = new YesNoMessage("ButtonChange");
+            yesNoMessage.ShowDialog();
 
-            if (result == MessageBoxResult.Yes)
+            if (yesNoMessage.DialogResult == true)
             {
                 EditorWindow buttonChange = new EditorWindow(iSender);
                 buttonChange.ShowDialog();
@@ -252,7 +240,7 @@ namespace vLauncher
 
             if (!Directory.Exists(path))
             {
-                MessageBox.Show("Saves-Ordner nicht gefunden.");
+                OkMessage okMessage = new OkMessage("DirectoryNotFound");
                 return;
             }
 
@@ -260,7 +248,7 @@ namespace vLauncher
 
             if (!File.Exists(filePath))
             {
-                MessageBox.Show("Keine Datei gefunden.");
+                OkMessage okMessage = new OkMessage("FileNotFound");
                 return;
             }
 

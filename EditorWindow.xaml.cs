@@ -35,13 +35,10 @@ namespace vLauncher
 
         public void vAbbrechen(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(
-               "Wollen Sie wirklich dieses Fenster schließen? Alle nicht gespeicherten Änderungen gehen verloren!",
-               "Warnung",
-               MessageBoxButton.YesNo,
-               MessageBoxImage.Question);
+            YesNoMessage yesNoMessage = new YesNoMessage("ButtonClose");
+            yesNoMessage.ShowDialog();
 
-            if (result == MessageBoxResult.Yes)
+            if (yesNoMessage.DialogResult == true)
             {
                 this.DialogResult = true;
                 this.Close();
@@ -71,13 +68,9 @@ namespace vLauncher
             }
             else if (strButtonName == "")
             {
-                MessageBoxResult result = MessageBox.Show(
-                    "Der Buttonname darf nicht leer sein, wenn Sie trotzdem fortfahren wird die Buttoneinstellung gelöscht \n Möchten Sie das Bearbeitungsfenster verlassen?",
-                    "Warnung",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+                YesNoMessage yesnoMessage = new YesNoMessage("ButtonNameEmpty");
 
-                if (result == MessageBoxResult.Yes)
+                if (yesnoMessage.DialogResult == true)
                 {
                     File.Delete(path);
                     this.DialogResult = true;

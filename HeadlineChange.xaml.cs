@@ -30,6 +30,7 @@ namespace vLauncher
 
         public void vBtnAbbrechen(object sender, RoutedEventArgs e)
         {
+            OkMessage okMessage = new OkMessage("ButtonClose");
             this.Close();
         }
 
