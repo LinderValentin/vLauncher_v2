@@ -6,7 +6,7 @@
         Background="Transparent"
         WindowStartupLocation="CenterOwner"
         Title="Warning"
-        Height="160"
+        Height="230"
         Width="360">
 
     <Window.Resources>
@@ -15,16 +15,15 @@
         <SolidColorBrush x:Key="PrimaryColor" Color="#3B82F6"/>
         <SolidColorBrush x:Key="AccentColor" Color="#22D3EE"/>
 
-        <!-- BUTTON STYLE (DEIN STYLE) -->
+        <!-- BUTTON STYLE -->
         <Style x:Key="ModernBlueButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="13"/>
 
-            <Setter Property="MinWidth" Value="90"/>
-            <Setter Property="MinHeight" Value="40"/>
-            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Margin" Value="6"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -67,39 +66,56 @@
 
     </Window.Resources>
 
-    <!-- CONTAINER -->
-    <Border CornerRadius="14" Background="#0F1115" Padding="16">
+    <!-- MAIN CONTAINER -->
+    <Border CornerRadius="14"
+            Background="#0F1115"
+            Padding="18">
+
         <Border.Effect>
-            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect BlurRadius="20"
+                              ShadowDepth="0"
+                              Opacity="0.5"/>
         </Border.Effect>
 
-        <StackPanel>
+        <Grid>
 
-            <!-- TEXT (Platz für ~3 Zeilen) -->
-            <TextBlock x:Name="TxtMessage"
-                       Text="Warning"
-                       Foreground="White"
-                       FontSize="14"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"
-                       HorizontalAlignment="Stretch"
-                       Height="70"
-                       Margin="0,0,0,12"/>
+            <Grid.RowDefinitions>
+                <!-- TEXT AREA -->
+                <RowDefinition Height="*"/>
+
+                <!-- BUTTON AREA -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- TEXT (perfekt zentriert) -->
+            <Grid Grid.Row="0">
+                <TextBlock x:Name="TxtMessage"
+                           Foreground="White"
+                           FontSize="14"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center"
+                           Margin="10"/>
+            </Grid>
 
             <!-- BUTTONS -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-
-                <Button Content="Nein"
-                        Click="BtnNo_Click"
-                        Style="{StaticResource ModernBlueButton}"/>
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,12,0,0">
 
                 <Button Content="Ja"
                         Click="BtnYes_Click"
                         Style="{StaticResource ModernBlueButton}"/>
 
+                <Button Content="Nein"
+                        Click="BtnNo_Click"
+                        Style="{StaticResource ModernBlueButton}"/>
+
             </StackPanel>
 
-        </StackPanel>
+        </Grid>
     </Border>
 
 </Window>

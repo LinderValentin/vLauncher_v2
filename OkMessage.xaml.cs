@@ -35,9 +35,6 @@ namespace vLauncher
         {
             switch (strShortTyp)
             {
-                case "Default":
-                    TxtMessage.Text = "Bist du sicher, dass du diese Aktion ausfürhen willst?";
-                    break;
                 case "DirectoryNotFound":
                     TxtMessage.Text = "Saves-Ordner nicht gefunden.";
                     break;
@@ -46,6 +43,23 @@ namespace vLauncher
                     break;
                 case "ButtonNameEmpty":
                     TxtMessage.Text = "Der Buttonname darf nicht leer sein, wenn Sie trotzdem fortfahren wird die Buttoneinstellung gelöscht \n Möchten Sie das Bearbeitungsfenster verlassen?";
+                    break;
+                case "AppNotFound":
+                    TxtMessage.Text = " Anwendung/Datei/Ordner nicht gefunden.";
+                    break;
+                case "ButtonClose":
+                    TxtMessage.Text = "Möchten Sie das Bearbeitungsfenster verlassen?";
+                    break;
+                default:
+
+                    if (strShortTyp != "Default")
+                    {
+                        TxtMessage.Text = "Möchten Sie diese Aktion wirklich ausführen?";
+                    } else
+                    {
+                        TxtMessage.Text = "Es ist ein Fehler aufgetreten.";
+                    }
+
                     break;
 
 

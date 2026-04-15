@@ -55,9 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\WindowPositionHelper.cs" />
     <Compile Include="OkMessage.xaml.cs">
       <DependentUpon>OkMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="YesNoMessage.xaml.cs">
       <DependentUpon>YesNoMessage.xaml</DependentUpon>
     </Compile>

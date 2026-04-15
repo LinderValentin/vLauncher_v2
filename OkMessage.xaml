@@ -4,17 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:vLauncher"
+        WindowStyle="None"
         mc:Ignorable="d"
         Title="Warning"
-        Height="180"
+        Height="230"
         Width="360">
+
     <Window.Resources>
 
         <!-- COLORS -->
         <SolidColorBrush x:Key="PrimaryColor" Color="#3B82F6"/>
         <SolidColorBrush x:Key="AccentColor" Color="#22D3EE"/>
 
-        <!-- BUTTON STYLE (DEIN STYLE) -->
+        <!-- BUTTON STYLE -->
         <Style x:Key="ModernBlueButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="Foreground" Value="White"/>
@@ -66,27 +68,61 @@
 
     </Window.Resources>
 
-    <!-- CONTAINER -->
-    <Border CornerRadius="14" Background="#0F1115" Padding="16">
+    <!-- MAIN -->
+    <Border CornerRadius="14"
+            Background="#0F1115"
+            Padding="16">
+
         <Border.Effect>
-            <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect BlurRadius="20"
+                              ShadowDepth="0"
+                              Opacity="0.5"/>
         </Border.Effect>
 
-        <StackPanel>
+        <!-- GRID LAYOUT -->
+        <Grid>
 
-            <!-- TEXT (Platz für ~3 Zeilen) -->
-            <TextBlock x:Name="TxtMessage"
+            <Grid.RowDefinitions>
+                <!-- Text -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Freier Platz -->
+                <RowDefinition Height="*"/>
+
+                <!-- Button unten -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- TEXT -->
+            <TextBlock x:Name="TxtMessageTitel"
+                       Grid.Row="0"
                        Text="Warning"
                        Foreground="White"
                        FontSize="14"
                        TextWrapping="Wrap"
                        TextAlignment="Center"
                        HorizontalAlignment="Stretch"
-                       Height="70"
                        Margin="0,0,0,12"/>
 
-            <!-- BUTTONS -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <!-- FREIER SPACE (macht Layout stabil & modern) -->
+            <Border Grid.Row="1"
+                    
+                    Background="Transparent">
+                <TextBlock x:Name="TxtMessage"
+                    Grid.Row="0"
+                    Text="Warning"
+                    Foreground="White"
+                    FontSize="14"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Margin="0,0,0,12"/>
+             </Border>
+
+            <!-- BUTTON -->
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
 
                 <Button Content="OK"
                         Click="BtnOk_Click"
@@ -94,7 +130,7 @@
 
             </StackPanel>
 
-        </StackPanel>
+        </Grid>
     </Border>
 
 </Window>

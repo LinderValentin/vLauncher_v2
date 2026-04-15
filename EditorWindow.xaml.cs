@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 
+using vLauncher.Helpers;
 namespace vLauncher
 {
     public partial class EditorWindow : Window
@@ -36,6 +37,7 @@ namespace vLauncher
         public void vAbbrechen(object sender, RoutedEventArgs e)
         {
             YesNoMessage yesNoMessage = new YesNoMessage("ButtonClose");
+            WindowPositionHelper.CenterToOwner(yesNoMessage, this);
             yesNoMessage.ShowDialog();
 
             if (yesNoMessage.DialogResult == true)
@@ -69,6 +71,7 @@ namespace vLauncher
             else if (strButtonName == "")
             {
                 YesNoMessage yesnoMessage = new YesNoMessage("ButtonNameEmpty");
+                WindowPositionHelper.CenterToOwner(yesnoMessage, this);
                 yesnoMessage.ShowDialog();
 
                 if (yesnoMessage.DialogResult == true)

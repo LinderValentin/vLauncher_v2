@@ -18,6 +18,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 
+using vLauncher.Helpers;
+
 namespace vLauncher
 {
     public partial class HeadlineChange : Window
@@ -31,6 +33,8 @@ namespace vLauncher
         public void vBtnAbbrechen(object sender, RoutedEventArgs e)
         {
             OkMessage okMessage = new OkMessage("ButtonClose");
+            WindowPositionHelper.CenterToOwner(okMessage, this);
+            okMessage.ShowDialog();
             this.Close();
         }
 

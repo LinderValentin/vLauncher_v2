@@ -18,6 +18,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 
+using vLauncher.Helpers;
+
 namespace vLauncher
 {
     public partial class MainWindow : Window
@@ -27,6 +29,16 @@ namespace vLauncher
         public MainWindow()
         {
             InitializeComponent();
+
+            this.WindowStartupLocation = WindowStartupLocation.Manual;
+
+            if (Properties.Settings.Default.WindowLeft != 0 ||
+                Properties.Settings.Default.WindowTop != 0)
+            {
+                this.Left = Properties.Settings.Default.WindowLeft;
+                this.Top = Properties.Settings.Default.WindowTop;
+            }
+
             vEnsureExistPath();
             vLoadHeadlines();
             vLoadButtons();
@@ -49,6 +61,7 @@ namespace vLauncher
             CloseMenu(sender, e);
 
             Info info = new Info();
+            WindowPositionHelper.CenterToOwner(info, this);
             info.ShowDialog();
         }
 
@@ -125,11 +138,13 @@ namespace vLauncher
 
 
             YesNoMessage yesNoMessage = new YesNoMessage("Reset1");
+            WindowPositionHelper.CenterToOwner(yesNoMessage, this);
             yesNoMessage.ShowDialog();
 
             if (yesNoMessage.DialogResult == true)
             {
                 YesNoMessage yesNoMessage2 = new YesNoMessage("Reset2");
+                WindowPositionHelper.CenterToOwner(yesNoMessage2, this);
                 yesNoMessage2.ShowDialog();
 
                 if (yesNoMessage2.DialogResult == true)
@@ -148,6 +163,7 @@ namespace vLauncher
                     }
 
                     YesNoMessage yesNoMessage3 = new YesNoMessage("Restart");
+                    WindowPositionHelper.CenterToOwner(yesNoMessage3, this);
                     yesNoMessage3.ShowDialog();
 
                     if (yesNoMessage3.DialogResult == true)
@@ -200,11 +216,13 @@ namespace vLauncher
             int iSender = int.Parse(btn.Tag.ToString());
 
             YesNoMessage yesNoMessage = new YesNoMessage("ButtonChange");
+            WindowPositionHelper.CenterToOwner(yesNoMessage, this);
             yesNoMessage.ShowDialog();
 
             if (yesNoMessage.DialogResult == true)
             {
                 EditorWindow buttonChange = new EditorWindow(iSender);
+                WindowPositionHelper.CenterToOwner(buttonChange, this);
                 buttonChange.ShowDialog();
 
                 if (buttonChange.DialogResult == true)
@@ -268,6 +286,8 @@ namespace vLauncher
             if (!Directory.Exists(path))
             {
                 OkMessage okMessage = new OkMessage("DirectoryNotFound");
+                WindowPositionHelper.CenterToOwner(okMessage, this);
+                okMessage.ShowDialog();
                 return;
             }
 
@@ -276,6 +296,8 @@ namespace vLauncher
             if (!File.Exists(filePath))
             {
                 OkMessage okMessage = new OkMessage("FileNotFound");
+                WindowPositionHelper.CenterToOwner(okMessage, this);
+                okMessage.ShowDialog();
                 return;
             }
 
@@ -293,9 +315,11 @@ namespace vLauncher
                         UseShellExecute = true
                     });
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show(ex.Message);
+                    OkMessage okMessage = new OkMessage("AppNotFound");
+                    WindowPositionHelper.CenterToOwner(okMessage, this);
+                    okMessage.ShowDialog();
                 }
             }
         }
@@ -342,6 +366,16 @@ namespace vLauncher
         private void MinimizeWindow(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            Properties.Settings.Default.WindowLeft = this.Left;
+            Properties.Settings.Default.WindowTop = this.Top;
+
+            Properties.Settings.Default.Save();
+
+            base.OnClosed(e);
         }
     }
 }
