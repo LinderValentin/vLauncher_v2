@@ -17,7 +17,9 @@ namespace vLauncher
 
             if (!createdNew)
             {
-                MessageBox.Show("vLauncher läuft bereits!");
+                OkMessage messageBox = new OkMessage("AlreadyRunning");
+                messageBox.ShowDialog(); // 🔥 WICHTIG
+
                 Shutdown();
                 return;
             }

@@ -2,5 +2,6 @@
 *So machen das user neue Überschriften machen kann ( über Headlines file wie viele es gibt, dann hinzufügen dieser reihen, aktualieseren der load Komponenten in mainwindow, rest arbeitet mit tags)
 *Logo hochwertiger machen und nach rechts verschieben
 
-*BugReport windows machen (mit Textfeld, Screenshot Möglichkeit?, Auswahl der Kategorie, etc.) und upload auf ?google server
-*custom Begrüßung mit Name (Eingabe nach ersten Start)
+*BackUp-Funktion
+*BugReport windows machen (mit Textfeld, Screenshot Möglichkeit?, Auswahl der Kategorie, etc.) und upload auf ?google server oder Gmail mit neuem Account?
+*custom Begrüßung mit Name (Eingabe nach ersten Start) Data Encryption

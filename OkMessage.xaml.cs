@@ -50,6 +50,9 @@ namespace vLauncher
                 case "ButtonClose":
                     TxtMessage.Text = "Möchten Sie das Bearbeitungsfenster verlassen?";
                     break;
+                case "AlreadyRunning":
+                    TxtMessage.Text = "vLauncher läuft bereits!";
+                    break;
                 default:
 
                     if (strShortTyp != "Default")
