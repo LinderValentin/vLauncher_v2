@@ -1,6 +1,3 @@
-*Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen*BackUp möglich (vllt mit Explorer öffnet sich und man kann so ordner aussuchen)
-*So machen das user neue Überschriften machen kann ( über Headlines file wie viele es gibt, dann hinzufügen dieser reihen, aktualieseren der load Komponenten in mainwindow, rest arbeitet mit tags)
-*Logo hochwertiger machen und nach rechts verschieben
+*Bei App auswahl soll man aus einer app liste (wie auch in den einstellungen) auch auswählen können und hinzufügen
 
-*BugReport windows machen (mit Textfeld, Screenshot Möglichkeit?, Auswahl der Kategorie, etc.) und upload auf ?google server
-*custom Begrüßung mit Name (Eingabe nach ersten Start)
+*So machen das user neue Überschriften machen kann ( über Headlines file wie viele es gibt, dann hinzufügen dieser reihen, aktualieseren der load Komponenten in mainwindow, rest arbeitet mit tags)

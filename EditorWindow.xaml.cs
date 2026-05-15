@@ -32,12 +32,14 @@ namespace vLauncher
             InitializeComponent();
             iIndexButton = i;
             vLoadFileContent();
+            // position window using saved coordinates or center on primary and save
+            WindowPositionHelper.PositionOrCenterOnPrimaryAndSave(this, "EditorWindow_" + iIndexButton);
         }
 
         public void vAbbrechen(object sender, RoutedEventArgs e)
         {
             YesNoMessage yesNoMessage = new YesNoMessage("ButtonClose");
-            WindowPositionHelper.CenterToOwner(yesNoMessage, this);
+            WindowPositionHelper.PositionOrCenterOnPrimaryAndSave(yesNoMessage, "YesNoMessage_ButtonClose");
             yesNoMessage.ShowDialog();
 
             if (yesNoMessage.DialogResult == true)
@@ -71,7 +73,7 @@ namespace vLauncher
             else if (strButtonName == "")
             {
                 YesNoMessage yesnoMessage = new YesNoMessage("ButtonNameEmpty");
-                WindowPositionHelper.CenterToOwner(yesnoMessage, this);
+                WindowPositionHelper.PositionOrCenterOnPrimaryAndSave(yesnoMessage, "YesNoMessage_ButtonNameEmpty");
                 yesnoMessage.ShowDialog();
 
                 if (yesnoMessage.DialogResult == true)

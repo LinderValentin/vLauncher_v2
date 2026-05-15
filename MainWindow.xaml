@@ -343,10 +343,18 @@
                                 Style="{StaticResource ModernBlueButton}"
                                 Click="vMenueHeadlines"/>
 
+                            <Button Content="Daten Exportieren"
+                                Style="{StaticResource ModernBlueButton}"
+                                Click="vMenueExport"/>
+
+                            <Button Content="Daten importieren"
+                                Style="{StaticResource ModernBlueButton}"
+                                Click="vMenueImport"/>
+
                             <Button Content="Zurücksetzen"
                                 Style="{StaticResource ModernBlueButton}"
                                 Click="vMenueReset"/>
-                            
+
                             <Button Content="Beenden"
                                 Style="{StaticResource ModernBlueButton}"
                                 Click="vCloseSoftware"/>

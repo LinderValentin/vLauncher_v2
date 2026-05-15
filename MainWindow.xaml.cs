@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 
+
 using vLauncher.Helpers;
 
 namespace vLauncher
@@ -71,7 +72,7 @@ namespace vLauncher
             vChangeHeadlines(sender, e);
         }
 
-        public void vMenueReset (object sender, RoutedEventArgs e)
+        public void vMenueReset(object sender, RoutedEventArgs e)
         {
             CloseMenu(sender, e);
             vResetFiles(sender, e);
@@ -82,7 +83,25 @@ namespace vLauncher
             Application.Current.Shutdown();
         }
 
+        public void vMenueExport(object sender, RoutedEventArgs e)
+        {
+            CloseMenu(sender, e);
+            ExportWindow exportWindow = new ExportWindow();
+            exportWindow.ShowDialog();
+            WindowPositionHelper.CenterToOwner(exportWindow, this);
 
+        }
+
+        public void vMenueImport(object sender, RoutedEventArgs e)
+        {
+            CloseMenu(sender, e);
+            ImportWindow importWindow = new ImportWindow();
+            importWindow.ShowDialog();
+            WindowPositionHelper.CenterToOwner(importWindow, this);
+
+            vReloadData();
+
+        }
 
 
         private void CloseMenu(object sender, RoutedEventArgs e)
@@ -281,11 +300,11 @@ namespace vLauncher
 
             int iSender = int.Parse(btn.Tag.ToString());
 
-            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves" );
+            string path = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves");
 
             if (!Directory.Exists(path))
             {
-                OkMessage okMessage = new OkMessage("DirectoryNotFound");
+                OkMessage okMessage = new OkMessage("DirectoryNotFound", "");
                 WindowPositionHelper.CenterToOwner(okMessage, this);
                 okMessage.ShowDialog();
                 return;
@@ -295,7 +314,7 @@ namespace vLauncher
 
             if (!File.Exists(filePath))
             {
-                OkMessage okMessage = new OkMessage("FileNotFound");
+                OkMessage okMessage = new OkMessage("FileNotFound", "");
                 WindowPositionHelper.CenterToOwner(okMessage, this);
                 okMessage.ShowDialog();
                 return;
@@ -317,7 +336,7 @@ namespace vLauncher
                 }
                 catch (Exception)
                 {
-                    OkMessage okMessage = new OkMessage("AppNotFound");
+                    OkMessage okMessage = new OkMessage("AppNotFound", "");
                     WindowPositionHelper.CenterToOwner(okMessage, this);
                     okMessage.ShowDialog();
                 }

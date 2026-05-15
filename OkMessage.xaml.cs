@@ -22,16 +22,18 @@ namespace vLauncher
 
 
         public string strType = "Default";
+        public string additionalText = "Default";
 
-        public OkMessage(string strShortTyp)
+        public OkMessage(string strShortTyp, string additional)
         {
             InitializeComponent();
             this.strType = strShortTyp;
-            vDecideMessage(strType);
+            this.additionalText = additional;
+            vDecideMessage(strType, additionalText);
         }
 
 
-        public void vDecideMessage(string strShortTyp)
+        public void vDecideMessage(string strShortTyp, string AdditionalText)
         {
             switch (strShortTyp)
             {
@@ -49,6 +51,21 @@ namespace vLauncher
                     break;
                 case "ButtonClose":
                     TxtMessage.Text = "Möchten Sie das Bearbeitungsfenster verlassen?";
+                    break;
+                case "ExportSuccess":
+                    TxtMessage.Text = "Export erfolgreich abgeschlossen!";
+                    break;
+                case "ExportError":
+                    TxtMessage.Text = "Fehler beim Export! Fehlercode: " + AdditionalText;
+                    break;
+                case "ExportSourceDirectoryNotFound":
+                    TxtMessage.Text = "Der Saves-Ordner konnte nicht gefunden werden.";
+                    break;
+                case "ImportSuccess":
+                    TxtMessage.Text = "Import erfolgreich abgeschlossen!";
+                    break;
+                case "ImportError":
+                    TxtMessage.Text = "Fehler beim Export! Fehlercode: " + AdditionalText;
                     break;
                 default:
 

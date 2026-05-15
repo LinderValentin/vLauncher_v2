@@ -32,7 +32,7 @@ namespace vLauncher
 
         public void vBtnAbbrechen(object sender, RoutedEventArgs e)
         {
-            OkMessage okMessage = new OkMessage("ButtonClose");
+            OkMessage okMessage = new OkMessage("ButtonClose", "");
             WindowPositionHelper.CenterToOwner(okMessage, this);
             okMessage.ShowDialog();
             this.Close();
