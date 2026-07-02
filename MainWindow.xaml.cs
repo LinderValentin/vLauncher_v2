@@ -42,6 +42,7 @@ namespace vLauncher
 
             vEnsureExistPath();
             vLoadHeadlines();
+            vBuildHeadlineCards();
             vLoadButtons();
         }
 
@@ -87,8 +88,8 @@ namespace vLauncher
         {
             CloseMenu(sender, e);
             ExportWindow exportWindow = new ExportWindow();
-            exportWindow.ShowDialog();
             WindowPositionHelper.CenterToOwner(exportWindow, this);
+            exportWindow.ShowDialog();
 
         }
 
@@ -96,8 +97,8 @@ namespace vLauncher
         {
             CloseMenu(sender, e);
             ImportWindow importWindow = new ImportWindow();
-            importWindow.ShowDialog();
             WindowPositionHelper.CenterToOwner(importWindow, this);
+            importWindow.ShowDialog();
 
             vReloadData();
 
@@ -131,10 +132,12 @@ namespace vLauncher
 
             List<string> strList = new List<string>(File.ReadAllLines(path));
 
-            Headline1.Text = strList[0];
-            Headline2.Text = strList[1];
-            Headline3.Text = strList[2];
-            Headline4.Text = strList[3];
+            // Ensure at least 4 entries for backward compatibility
+            while (strList.Count < 4)
+                strList.Add("unbenutzt");
+
+            // Store headlines in Tag of CardStackPanel for access by other methods
+            CardStackPanel.Tag = strList;
         }
 
         public void vChangeHeadlines(object sender, RoutedEventArgs e)
@@ -145,6 +148,100 @@ namespace vLauncher
             if (headlineChange.DialogResult == true)
             {
                 vReloadData();
+            }
+        }
+
+        // Builds headline cards dynamically based on headlines.vdata
+        public void vBuildHeadlineCards()
+        {
+            CardStackPanel.Children.Clear();
+
+            var headlines = CardStackPanel.Tag as List<string> ?? new List<string> { "unbenutzt", "unbenutzt", "unbenutzt", "unbenutzt" };
+
+            for (int i = 0; i < headlines.Count; i++)
+            {
+                int headlineIndex = i + 1;
+
+                // Create Border (card)
+                var border = new Border()
+                {
+                    Style = (Style)FindResource("CardStyle")
+                };
+
+                var stack = new StackPanel();
+
+                var txt = new TextBlock()
+                {
+                    Text = headlines[i],
+                    FontSize = 18,
+                    FontWeight = FontWeights.Bold,
+                    Margin = new Thickness(0, 0, 0, 12),
+                    Foreground = Brushes.White
+                };
+                txt.MouseLeftButtonDown += vDoubleClickHeadline;
+
+                stack.Children.Add(txt);
+
+                var wrap = new WrapPanel();
+
+                for (int btn = 1; btn <= 5; btn++)
+                {
+                    string tag = (headlineIndex * 10 + btn).ToString();
+                    var button = new Button()
+                    {
+                        Tag = tag,
+                        Content = "unbenutzt",
+                        Style = (Style)FindResource("DisabledButtonStyle"),
+                        Margin = new Thickness(6),
+                        MinWidth = 140,
+                        MinHeight = 52
+                    };
+                    button.Click += vLoadApps;
+                    button.MouseRightButtonUp += vChangeButtons;
+
+                    // Register name so FindName can locate it later
+                    try
+                    {
+                        this.RegisterName($"Btn{tag}", button);
+                    }
+                    catch { }
+
+                    // Try to load button display/style from corresponding .vdata file
+                    try
+                    {
+                        string savesPath = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "vLauncher", "Saves");
+                        string filePath = IOPath.Combine(savesPath, tag + ".vdata");
+                        if (File.Exists(filePath))
+                        {
+                            var content = File.ReadAllLines(filePath);
+                            var raw = content.Length > 0 ? content[0] : string.Empty;
+                            var display = string.IsNullOrWhiteSpace(raw) ? "unbenutzt" : raw.Trim();
+                            button.Content = display;
+
+                            var blue = TryFindResource("ModernBlueButton") as Style;
+                            var disabled = TryFindResource("DisabledButtonStyle") as Style;
+
+                            if (!string.Equals(display, "unbenutzt", StringComparison.OrdinalIgnoreCase) &&
+                                !string.Equals(display, "leer", StringComparison.OrdinalIgnoreCase) &&
+                                blue != null)
+                            {
+                                button.Style = blue;
+                            }
+                            else if (disabled != null)
+                            {
+                                button.Style = disabled;
+                            }
+                        }
+                    }
+                    catch { }
+
+                    wrap.Children.Add(button);
+                }
+
+                stack.Children.Add(wrap);
+                border.Child = stack;
+
+                CardStackPanel.Children.Add(border);
             }
         }
 
@@ -200,6 +297,7 @@ namespace vLauncher
             vClearUI();
 
             vLoadHeadlines();
+            vBuildHeadlineCards();
             vLoadButtons();
 
             Dispatcher.Invoke(() => { }, System.Windows.Threading.DispatcherPriority.Render);
@@ -207,23 +305,31 @@ namespace vLauncher
 
         public void vClearUI()
         {
-            // Headlines reset
-            Headline1.Text = "";
-            Headline2.Text = "";
-            Headline3.Text = "";
-            Headline4.Text = "";
-
-            // Buttons reset
-            for (int i = 1; i <= 4; i++)
+            // Headlines and buttons reset for dynamic UI
+            foreach (var child in CardStackPanel.Children)
             {
-                for (int j = 1; j <= 5; j++)
+                if (child is Border b && b.Child is StackPanel sp)
                 {
-                    Button btn = FindName($"Btn{i}{j}") as Button;
+                    // First child is TextBlock headline
+                    if (sp.Children.Count > 0 && sp.Children[0] is TextBlock tb)
+                    {
+                        tb.Text = string.Empty;
+                    }
 
-                    if (btn == null) continue;
-
-                    btn.Content = "unbenutzt";
-                    btn.Style = (Style)FindResource("DisabledButtonStyle");
+                    // Second child is WrapPanel with buttons
+                    if (sp.Children.Count > 1 && sp.Children[1] is WrapPanel wp)
+                    {
+                        foreach (var btnObj in wp.Children)
+                        {
+                            if (btnObj is Button btn)
+                            {
+                                btn.Content = "unbenutzt";
+                                var disabledStyle = TryFindResource("DisabledButtonStyle") as Style;
+                                if (disabledStyle != null)
+                                    btn.Style = disabledStyle;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -270,8 +376,35 @@ namespace vLauncher
 
                 Button btn = (Button)FindName("Btn" + name);
 
+                // If not found by FindName (dynamic buttons), try to search in CardStackPanel
+                if (btn == null)
+                {
+                    // name is like "11", "12" etc. Construct registered name
+                    btn = this.FindName("Btn" + name) as Button;
+                    if (btn == null)
+                    {
+                        // Search children
+                        foreach (var card in CardStackPanel.Children)
+                        {
+                            if (card is Border b && b.Child is StackPanel sp && sp.Children.Count > 1 && sp.Children[1] is WrapPanel wp)
+                            {
+                                foreach (var child in wp.Children)
+                                {
+                                    if (child is Button cb && cb.Tag != null && cb.Tag.ToString() == name)
+                                    {
+                                        btn = cb;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (btn != null) break;
+                        }
+                    }
+                }
+
                 if (btn != null)
                 {
+                    // Load display and style from file (first line stores display)
                     var raw = content.Length > 0 ? content[0] : string.Empty;
                     var display = string.IsNullOrWhiteSpace(raw) ? "unbenutzt" : raw.Trim();
                     btn.Content = display;
@@ -289,6 +422,8 @@ namespace vLauncher
                     {
                         btn.Style = disabled;
                     }
+
+                    // Optionally, if there are saved paths after the first line, they are kept in the file; loading of apps happens when clicking the button
                 }
             }
         }

@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Shapes;
 using vLauncher.Helpers;
 
@@ -32,6 +33,17 @@ namespace vLauncher
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        // allow dragging the custom titlebar
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)

@@ -178,27 +178,42 @@
             <!-- CONTENT -->
             <Border Grid.Row="1" Background="#1C2230" Padding="16" Margin="12">
 
-                <StackPanel Width="380">
+                <Grid Width="380">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
                     <TextBlock Text="Überschriften bearbeiten"
                                FontSize="18"
                                FontWeight="Bold"
                                Foreground="White"
-                               Margin="0,0,0,12"/>
+                               Margin="0,0,0,12"
+                               Grid.Row="0"/>
 
-                    <TextBlock Text="Headline 1" Foreground="White"/>
-                    <TextBox x:Name="TxtHeadline1"/>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="360">
+                        <StackPanel x:Name="HeadlinesPanel">
+                            <TextBlock Text="Headline 1" Foreground="White"/>
+                            <TextBox x:Name="TxtHeadline1"/>
 
-                    <TextBlock Text="Headline 2" Foreground="White" Margin="0,10,0,0"/>
-                    <TextBox x:Name="TxtHeadline2"/>
+                            <TextBlock Text="Headline 2" Foreground="White" Margin="0,10,0,0"/>
+                            <TextBox x:Name="TxtHeadline2"/>
 
-                    <TextBlock Text="Headline 3" Foreground="White" Margin="0,10,0,0"/>
-                    <TextBox x:Name="TxtHeadline3"/>
+                            <TextBlock Text="Headline 3" Foreground="White" Margin="0,10,0,0"/>
+                            <TextBox x:Name="TxtHeadline3"/>
 
-                    <TextBlock Text="Headline 4" Foreground="White" Margin="0,10,0,0"/>
-                    <TextBox x:Name="TxtHeadline4"/>
+                            <TextBlock Text="Headline 4" Foreground="White" Margin="0,10,0,0"/>
+                            <TextBox x:Name="TxtHeadline4"/>
+                        </StackPanel>
+                    </ScrollViewer>
 
-                    <StackPanel Orientation="Horizontal"
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" x:Name="AddDelPanel" Margin="0,10,0,0">
+                        <!-- Add/Delete buttons are inserted here by code-behind -->
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="0,14,0,0">
 
@@ -211,8 +226,7 @@
                                 Style="{StaticResource ModernBlueButton}"/>
 
                     </StackPanel>
-
-                </StackPanel>
+                </Grid>
             </Border>
 
         </Grid>

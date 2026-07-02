@@ -1,43 +1,68 @@
 <Window x:Class="vLauncher.ExportWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Export Saves" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="Export Saves"
+        Icon="/Images/vLauncher_Logo_klein.ico"
+        Height="260" Width="620"
+        WindowStartupLocation="CenterOwner"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="PrimaryColor">#FF1E88E5</SolidColorBrush>
-        <SolidColorBrush x:Key="PrimaryDark">#FF0D47A1</SolidColorBrush>
-        <SolidColorBrush x:Key="AccentColor">#FF00E5FF</SolidColorBrush>
-        <LinearGradientBrush x:Key="WindowBackground">
-            <GradientStop Color="#FF0D47A1" Offset="0" />
-            <GradientStop Color="#FF1E88E5" Offset="1" />
-        </LinearGradientBrush>
-        <SolidColorBrush x:Key="SurfaceBrush">#FFFFFFFF</SolidColorBrush>
-        <SolidColorBrush x:Key="CardBrush">#E8F3FF</SolidColorBrush>
+        <!-- COLORS (same as other windows) -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#22D3EE"/>
+        <SolidColorBrush x:Key="InputBg" Color="#151A22"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#2A2F3A"/>
 
+        <!-- BUTTON -->
         <Style x:Key="ModernBlueButton" TargetType="Button">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Margin" Value="8" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="MinWidth" Value="120" />
-            <Setter Property="MinHeight" Value="36" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Background" Value="{StaticResource PrimaryColor}" />
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryDark}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="MinWidth" Value="110"/>
+            <Setter Property="MinHeight" Value="42"/>
+            <Setter Property="Padding" Value="14,8"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="root" Background="{TemplateBinding Background}" CornerRadius="8" SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="10" RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform><ScaleTransform/></Border.RenderTransform>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="root" Property="Background" Value="{StaticResource AccentColor}" />
-                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="b" Property="Background" Value="{StaticResource AccentColor}"/></Trigger>
+                            <Trigger Property="IsPressed" Value="True"><Setter TargetName="b" Property="RenderTransform"><Setter.Value><ScaleTransform ScaleX="0.97" ScaleY="0.97"/></Setter.Value></Setter></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- TEXTBOX style -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource InputBg}"/>
+            <Setter Property="Foreground" Value="#E5E7EB"/>
+            <Setter Property="CaretBrush" Value="#22D3EE"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="border" Property="BorderBrush" Value="#3B82F6"/></Trigger>
+                            <Trigger Property="IsFocused" Value="True"><Setter TargetName="border" Property="BorderBrush" Value="#22D3EE"/><Setter TargetName="border" Property="BorderThickness" Value="1.5"/></Trigger>
+                            <Trigger Property="IsEnabled" Value="False"><Setter TargetName="border" Property="Opacity" Value="0.4"/></Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -45,30 +70,61 @@
         </Style>
 
         <Style x:Key="CardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource CardBrush}" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="12" />
-            <Setter Property="Margin" Value="12" />
+            <Setter Property="Background" Value="#E8F3FF"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="12"/>
         </Style>
     </Window.Resources>
 
-    <Grid Background="{StaticResource WindowBackground}">
-        <Border Style="{StaticResource CardStyle}" MaxWidth="560" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12">
-            <StackPanel>
-                <TextBlock Text="Saves exportieren" FontSize="18" FontWeight="Bold" Margin="0,0,0,8" />
-                <TextBlock Text="Wähle einen Speicherort für die ZIP-Datei:" Margin="0,6,0,6" />
-                <DockPanel>
-                    <TextBox x:Name="TxtZipPath" IsReadOnly="True" MinWidth="360" DockPanel.Dock="Left" />
-                    <Button x:Name="BtnBrowse" Content="Durchsuchen" Click="BtnBrowse_Click" Style="{StaticResource ModernBlueButton}" Margin="6,0,0,0" />
-                </DockPanel>
+    <Border CornerRadius="16" Background="#0F1115">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="25" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
 
-                <TextBlock Text="Hinweis: Der gesamte Saves-Ordner wird ins ZIP gepackt." FontSize="12" Opacity="0.9" Margin="0,8,0,12" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="BtnCancel" Content="Abbrechen" Click="BtnCancel_Click" Style="{StaticResource ModernBlueButton}" />
-                    <Button x:Name="BtnExport" Content="Exportieren" Click="BtnExport_Click" Style="{StaticResource ModernBlueButton}" IsEnabled="False" />
+            <!-- Titlebar -->
+            <Grid Grid.Row="0" Background="#0B0F19" MouseDown="DragWindow">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Button Content="—" Width="40" Height="40" Click="MinimizeWindow" Background="Transparent" Foreground="White" BorderThickness="0"/>
                 </StackPanel>
-            </StackPanel>
-        </Border>
-    </Grid>
+            </Grid>
+
+            <!-- Content -->
+            <Grid Grid.Row="1" Margin="14">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Saves exportieren" Foreground="White" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="Wähle einen Speicherort für die ZIP-Datei:" Foreground="#BFC7D3" FontSize="12" Margin="0,6,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="0,8,0,0">
+                    <DockPanel>
+                        <TextBox x:Name="TxtZipPath" IsReadOnly="True" MinWidth="360" DockPanel.Dock="Left" />
+                        <Button x:Name="BtnBrowse" Content="Durchsuchen" Click="BtnBrowse_Click" Style="{StaticResource ModernBlueButton}" Margin="6,0,0,0" />
+                    </DockPanel>
+                    <TextBlock Text="Hinweis: Der gesamte Saves-Ordner wird ins ZIP gepackt." Foreground="#BFC7D3" FontSize="12" Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="BtnCancel" Content="Abbrechen" Click="BtnCancel_Click" Style="{StaticResource ModernBlueButton}"/>
+                    <Button x:Name="BtnExport" Content="Exportieren" Click="BtnExport_Click" Style="{StaticResource ModernBlueButton}" IsEnabled="False"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

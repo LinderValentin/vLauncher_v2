@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
+using System.Windows.Input;
 using vLauncher.Helpers;
 
 namespace vLauncher
@@ -30,6 +31,16 @@ namespace vLauncher
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
