@@ -174,17 +174,52 @@ namespace vLauncher
                 _lastFocusedHeadline = null;
             };
 
+            var swapBtn = new Button() { Content = "⇄ Tauschen", Style = (Style)FindResource("ModernBlueButton") };
+            swapBtn.Click += (s, e) =>
+            {
+                var target = _lastFocusedHeadline;
+                if (target == null || !target.Name.StartsWith("TxtHeadline"))
+                {
+                    MessageBox.Show("Bitte wählen Sie eine Überschrift aus.", "Auswahl erforderlich", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                // Extract headline index
+                string headlineIndexStr = target.Name.Replace("TxtHeadline", "");
+                if (!int.TryParse(headlineIndexStr, out int headlineIndex))
+                {
+                    return;
+                }
+
+                // Collect all headlines
+                var allHeadlines = new List<string>();
+                int index = 1;
+                while (true)
+                {
+                    var tb = this.FindName($"TxtHeadline{index}") as TextBox;
+                    if (tb == null) break;
+                    allHeadlines.Add(tb.Text);
+                    index++;
+                }
+
+                // Show selection dialog - pass this window reference
+                HeadlineSwapSelect swapDialog = new HeadlineSwapSelect(headlineIndex - 1, allHeadlines, this);
+                WindowPositionHelper.CenterToOwner(swapDialog, this);
+                swapDialog.ShowDialog();
+            };
+
             // Remove any existing add/del buttons first
             // Remove existing add/del buttons from AddDelPanel
             for (int i = AddDelPanel.Children.Count - 1; i >= 0; i--)
             {
-                if (AddDelPanel.Children[i] is Button b && (b.Content.ToString().Contains("Überschrift")))
+                if (AddDelPanel.Children[i] is Button b && (b.Content.ToString().Contains("Überschrift") || b.Content.ToString().Contains("Tauschen")))
                     AddDelPanel.Children.RemoveAt(i);
             }
 
             // Add add/del buttons into AddDelPanel
             AddDelPanel.Children.Add(addBtn);
             AddDelPanel.Children.Add(delBtn);
+            AddDelPanel.Children.Add(swapBtn);
         }
 
         public void vBtnAbbrechen(object sender, RoutedEventArgs e)
@@ -286,6 +321,18 @@ namespace vLauncher
 
             this.DialogResult = true;
             this.Close();
+        }
+
+        private void SwapHeadlines(int firstIdx, int secondIdx)
+        {
+            // This method is no longer used - swap is done directly in HeadlineSwapSelect
+            // Kept for compatibility if needed
+        }
+
+        public void RefreshHeadlinesUI()
+        {
+            // Rebuild the dynamic UI to show updated headlines
+            vBuildDynamicUI();
         }
 
         private void TxtHeadline1_TextChanged(object sender, TextChangedEventArgs e)

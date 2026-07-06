@@ -74,6 +74,9 @@
     <Compile Include="ExportWindow.xaml.cs">
       <DependentUpon>ExportWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HeadlineSwapSelect.xaml.cs">
+      <DependentUpon>HeadlineSwapSelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\WindowPositionHelper.cs" />
     <Compile Include="ImportWindow.xaml.cs">
       <DependentUpon>ImportWindow.xaml</DependentUpon>
@@ -93,6 +96,9 @@
     </Page>
     <Page Include="HeadlineChange.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HeadlineSwapSelect.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ImportWindow.xaml">
@@ -125,6 +131,9 @@
     </Compile>
     <Page Include="OkMessage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ScrollbarStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="YesNoMessage.xaml">

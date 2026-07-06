@@ -121,6 +121,7 @@
             <!-- CONTENT -->
             <Border Grid.Row="1" Background="#1C2230" Margin="16" Padding="16" CornerRadius="12">
 
+                <ScrollViewer Style="{StaticResource ModernScrollViewer}">
                 <StackPanel>
 
                     <TextBlock Text="Wie funktioniert vLauncher?"
@@ -140,6 +141,7 @@ Zusätzlich kannst du Überschriften bearbeiten, um deine Kategorien individuell
 Alle Daten werden lokal gespeichert, sodass deine Einstellungen erhalten bleiben."/>
 
                 </StackPanel>
+                </ScrollViewer>
 
             </Border>
 

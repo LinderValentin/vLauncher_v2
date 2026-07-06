@@ -143,6 +143,7 @@ namespace vLauncher
         public void vChangeHeadlines(object sender, RoutedEventArgs e)
         {
             HeadlineChange headlineChange = new HeadlineChange();
+            WindowPositionHelper.CenterToOwner(headlineChange, this);
             headlineChange.ShowDialog();
 
             if (headlineChange.DialogResult == true)

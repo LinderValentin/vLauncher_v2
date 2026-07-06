@@ -85,7 +85,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="8">
 
-                            <ScrollViewer x:Name="PART_ContentHost"/>
+                            <ScrollViewer x:Name="PART_ContentHost" Style="{StaticResource ModernScrollViewer}"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
@@ -163,6 +163,7 @@
                     <TextBox x:Name="TxtApps"
                              AcceptsReturn="True"
                              Height="220"
+                             VerticalScrollBarVisibility="Auto"
                              TextChanged="TxtApps_TextChanged"/>
                 </StackPanel>
 
